@@ -11,4 +11,14 @@ const preview = {
   },
 };
 
+// Suppress ResizeObserver errors that are common in Storybook
+const resizeObserverErrorRegex = /^[^(ResizeObserver loop limit exceeded)]/;
+const originalError = console.error;
+console.error = (...args) => {
+  if (args[0] && typeof args[0] === 'string' && args[0].includes('ResizeObserver loop')) {
+    return;
+  }
+  originalError.apply(console, args);
+};
+
 export default preview;
