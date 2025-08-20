@@ -1,0 +1,27 @@
+/* Global styles to prevent ResizeObserver issues */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* Stabilize Storybook containers */
+#storybook-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Prevent layout thrashing */
+.sb-show-main, .sb-main-padded {
+  contain: layout style;
+}
+
+/* Stabilize button measurements */
+button {
+  contain: layout;
+}
