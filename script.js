@@ -792,47 +792,223 @@ function addCropCardStyles() {
     document.head.appendChild(style);
 }
 
-// Farming Tips Functions
+// Farming Tips Functions - Gen Z Edition
 function generateFarmingTips() {
     const tips = [
         {
-            title: "Soil Testing",
-            content: "Test your soil pH and nutrient levels every 2-3 years to optimize crop selection and fertilizer use."
+            title: "Soil Health Check 🧪",
+            content: "Get your soil tested like you'd check your phone battery! Test pH and nutrients every 2-3 years to keep your crops happy and thriving.",
+            category: "Science",
+            icon: "🔬",
+            trending: true
         },
         {
-            title: "Water Management",
-            content: "Use drip irrigation or sprinkler systems to reduce water waste and improve crop yield."
+            title: "Smart Water Game 💧",
+            content: "Level up with drip irrigation and smart sprinklers. It's like having precision controls for your farm - save water, boost yields, win the game!",
+            category: "Tech",
+            icon: "💻",
+            trending: true
         },
         {
-            title: "Crop Rotation",
-            content: "Rotate crops seasonally to maintain soil health and reduce pest and disease problems."
+            title: "Crop Rotation Strategy 🔄",
+            content: "Think of it as a playlist shuffle for your fields! Rotate crops to keep soil healthy and pests confused. Diversity is key! 🎵",
+            category: "Strategy",
+            icon: "🎯",
+            trending: false
         },
         {
-            title: "Weather Monitoring",
-            content: "Check weather forecasts regularly and plan farming activities accordingly to avoid losses."
+            title: "Weather Radar On 🌤️",
+            content: "Stay updated like you check social media! Use weather apps and forecasts to time your farming activities perfectly. No more weather surprises!",
+            category: "Planning",
+            icon: "📱",
+            trending: true
         },
         {
-            title: "Organic Farming",
-            content: "Consider organic fertilizers and pest control methods for sustainable farming and better soil health."
+            title: "Go Organic, Go Viral 🌱",
+            content: "Organic farming is the trend that actually matters! Use natural fertilizers and pest control. Your soil will thank you, and so will the planet! 🌍",
+            category: "Sustainability",
+            icon: "♻️",
+            trending: true
         },
         {
-            title: "Market Research",
-            content: "Research market prices and demand before selecting crops to ensure better profitability."
+            title: "Market Intelligence 📊",
+            content: "Do your research before planting! Check market trends, pricing, and demand. It's like checking reviews before buying - but for crops! 💰",
+            category: "Business",
+            icon: "💡",
+            trending: false
+        },
+        {
+            title: "IoT & Sensors 🤖",
+            content: "Embrace the future with smart sensors! Monitor soil moisture, temperature, and crop health in real-time. Farm like it's 2024! 🚀",
+            category: "Innovation",
+            icon: "📡",
+            trending: true
+        },
+        {
+            title: "Social Farming 🤝",
+            content: "Connect with other farmers online! Share experiences, ask questions, and learn from the community. Farming is better together! 💪",
+            category: "Community",
+            icon: "👥",
+            trending: true
         }
     ];
     
     const tipsContainer = document.getElementById('farming-tips');
     tipsContainer.innerHTML = '';
-    
-    tips.forEach(tip => {
+
+    tips.forEach((tip, index) => {
         const tipCard = document.createElement('div');
-        tipCard.className = 'tip-card';
+        tipCard.className = 'tip-card modern-tip';
+
+        // Add animation delay
+        tipCard.style.animationDelay = `${index * 0.1}s`;
+        tipCard.style.animation = 'slideInUp 0.6s ease-out both';
+
+        const trendingBadge = tip.trending ? '<span class="trending-badge">🔥 Trending</span>' : '';
+
         tipCard.innerHTML = `
+            <div class="tip-header">
+                <div class="tip-icon">${tip.icon}</div>
+                <div class="tip-category">${tip.category}</div>
+                ${trendingBadge}
+            </div>
             <h4>${tip.title}</h4>
             <p>${tip.content}</p>
+            <div class="tip-actions">
+                <button class="tip-action-btn" onclick="saveTip('${tip.title}')">
+                    <i class="fas fa-bookmark"></i> Save
+                </button>
+                <button class="tip-action-btn" onclick="shareTip('${tip.title}')">
+                    <i class="fas fa-share"></i> Share
+                </button>
+                <button class="tip-action-btn" onclick="likeTip('${tip.title}')">
+                    <i class="fas fa-heart"></i> Like
+                </button>
+            </div>
         `;
+
         tipsContainer.appendChild(tipCard);
     });
+
+    // Add modern tip styles
+    addModernTipStyles();
+}
+
+function saveTip(tipTitle) {
+    const savedTips = JSON.parse(localStorage.getItem('savedTips') || '[]');
+    if (!savedTips.includes(tipTitle)) {
+        savedTips.push(tipTitle);
+        localStorage.setItem('savedTips', JSON.stringify(savedTips));
+        showNotification(`💾 "${tipTitle}" saved to your collection!`);
+    } else {
+        showNotification(`⚠️ You've already saved this tip!`);
+    }
+}
+
+function shareTip(tipTitle) {
+    if (navigator.share) {
+        navigator.share({
+            title: `💡 FarmTech Pro Tip: ${tipTitle}`,
+            text: `Check out this awesome farming tip from FarmTech Pro!`,
+            url: window.location.href
+        });
+    } else {
+        showNotification(`📤 Sharing "${tipTitle}" - Link copied!`);
+    }
+}
+
+function likeTip(tipTitle) {
+    showNotification(`❤️ You liked "${tipTitle}"! Thanks for the feedback!`);
+    // Add to analytics or backend
+}
+
+function addModernTipStyles() {
+    if (document.getElementById('modern-tip-styles')) return;
+
+    const style = document.createElement('style');
+    style.id = 'modern-tip-styles';
+    style.textContent = `
+        .modern-tip {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tip-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .tip-icon {
+            font-size: 2rem;
+            background: var(--primary-gradient);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .tip-category {
+            background: var(--glass-bg);
+            color: var(--text-secondary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid var(--border-glass);
+        }
+
+        .trending-badge {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+
+        .tip-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-glass);
+        }
+
+        .tip-action-btn {
+            flex: 1;
+            background: var(--glass-bg);
+            border: 1px solid var(--border-glass);
+            color: var(--text-secondary);
+            padding: 0.6rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+        }
+
+        .tip-action-btn:hover {
+            background: var(--primary-gradient);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .modern-tip:hover .tip-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+    `;
+    document.head.appendChild(style);
 }
 
 // Initialize recommendations on page load
