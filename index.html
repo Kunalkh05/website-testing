@@ -3,313 +3,622 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌱 FarmTech Pro - Next-Gen Agriculture</title>
+    <title>AgroDoc - Smart AI Crop Doctor for New-Age Farmers</title>
+    <meta name="description" content="Upload. Detect. Protect. Save your crops with AI in seconds. Smart farming starts here with AI crop disease detection.">
     <link rel="stylesheet" href="style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Background Elements -->
-    <div class="bg-elements">
-        <div class="bg-gradient"></div>
-        <div class="bg-dots"></div>
-        <div class="floating-shapes">
-            <div class="shape shape-1"></div>
-            <div class="shape shape-2"></div>
-            <div class="shape shape-3"></div>
-        </div>
-    </div>
-
-    <header class="header">
-        <nav class="navbar">
-            <div class="nav-brand">
-                <div class="brand-icon">🌱</div>
-                <h1>FarmTech <span class="pro-badge">PRO</span></h1>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-seedling"></i>
+                <span>AgroDoc</span>
             </div>
+            
             <div class="nav-menu">
-                <a href="#dashboard" class="nav-link">
-                    <i class="fas fa-chart-line"></i> Dashboard
-                </a>
-                <a href="#weather" class="nav-link">
-                    <i class="fas fa-cloud-sun"></i> Weather AI
-                </a>
-                <a href="#crops" class="nav-link">
-                    <i class="fas fa-leaf"></i> Crop Match
-                </a>
-                <a href="#insights" class="nav-link">
-                    <i class="fas fa-brain"></i> AI Insights
-                </a>
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#solution" class="nav-link">Solution</a>
+                <a href="#demo" class="nav-link">Demo</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#team" class="nav-link">Team</a>
+                <a href="#contact" class="nav-link">Contact</a>
             </div>
+            
             <div class="nav-actions">
-                <button class="theme-toggle" onclick="toggleTheme()">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <button class="share-btn" onclick="shareApp()">
-                    <i class="fas fa-share-alt"></i>
-                </button>
+                <button class="btn-secondary">Login</button>
+                <button class="btn-primary">Try Demo</button>
             </div>
-        </nav>
-    </header>
+            
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
 
-    <main class="main-content">
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
-                <div class="hero-badge">
-                    <span>🚀 AI-Powered Agriculture</span>
-                </div>
-                <h2>Farm Smarter, Not Harder<br><span class="gradient-text">with Next-Gen Tech</span></h2>
-                <p>Your personal farming assistant powered by AI, real-time data, and location intelligence. Join the future of agriculture! 🌾✨</p>
-
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="hero-video-overlay"></div>
+            <!-- Background will be handled by CSS -->
+        </div>
+        
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">Smart Farming Starts Here<br><span class="highlight">AI Crop Disease Detection</span><br>for New-Age Farmers</h1>
+                <p class="hero-subtitle">Upload. Detect. Protect. Save your crops with AI in seconds.</p>
+                
                 <div class="hero-stats">
                     <div class="stat">
                         <div class="stat-number">95%</div>
                         <div class="stat-label">Accuracy Rate</div>
                     </div>
                     <div class="stat">
+                        <div class="stat-number">50K+</div>
+                        <div class="stat-label">Farmers Helped</div>
+                    </div>
+                    <div class="stat">
                         <div class="stat-number">24/7</div>
                         <div class="stat-label">AI Support</div>
                     </div>
-                    <div class="stat">
-                        <div class="stat-number">50K+</div>
-                        <div class="stat-label">Happy Farmers</div>
-                    </div>
                 </div>
-
-                <div class="cta-group">
-                    <button class="cta-button primary" onclick="getLocation()">
-                        <i class="fas fa-rocket"></i>
-                        Start My Farm Journey
+                
+                <div class="hero-cta">
+                    <button class="btn-primary large" onclick="scrollToDemo()">
+                        <i class="fas fa-camera"></i>
+                        Try Demo Now
                     </button>
-                    <button class="cta-button secondary" onclick="watchDemo()">
-                        <i class="fas fa-play"></i>
-                        Watch Demo
+                    <button class="btn-secondary large" onclick="scrollToSolution()">
+                        <i class="fas fa-info-circle"></i>
+                        Learn More
                     </button>
                 </div>
-
-                <div class="social-proof">
-                    <span>Trusted by farmers across India 🇮🇳</span>
-                    <div class="trust-badges">
-                        <span class="badge">🏆 Award Winner</span>
-                        <span class="badge">⚡ Real-time Data</span>
-                        <span class="badge">🤖 AI Powered</span>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="app-interface">
+                            <div class="upload-area">
+                                <i class="fas fa-camera"></i>
+                                <p>Snap a photo</p>
+                            </div>
+                            <div class="analysis-result">
+                                <i class="fas fa-check-circle"></i>
+                                <p>Disease Detected</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Location Status -->
-        <section id="location-section" class="location-section hidden">
-            <div class="location-card">
-                <h3><i class="fas fa-map-marker-alt"></i> Your Location</h3>
-                <div id="location-info" class="location-info">
-                    <p id="location-text">Detecting your location...</p>
-                    <div id="coordinates" class="coordinates"></div>
+    <!-- About the Problem Section -->
+    <section class="problem-section">
+        <div class="container">
+            <div class="problem-grid">
+                <div class="problem-content">
+                    <h2>The Reality of Crop Diseases</h2>
+                    <p class="problem-text">Every year, farmers lose <strong>20-40% of their crops</strong> to diseases that could have been prevented with early detection.</p>
+                    
+                    <div class="problem-stats">
+                        <div class="problem-stat">
+                            <div class="stat-icon">📉</div>
+                            <div class="stat-info">
+                                <h3>$220 Billion</h3>
+                                <p>Annual global crop losses</p>
+                            </div>
+                        </div>
+                        <div class="problem-stat">
+                            <div class="stat-icon">⏰</div>
+                            <div class="stat-info">
+                                <h3>48 Hours</h3>
+                                <p>Critical window for treatment</p>
+                            </div>
+                        </div>
+                        <div class="problem-stat">
+                            <div class="stat-icon">🌾</div>
+                            <div class="stat-info">
+                                <h3>80%</h3>
+                                <p>Diseases preventable if caught early</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <blockquote>
+                        "Traditional methods are too slow. By the time we get expert help, it's often too late to save the crops."
+                        <cite>- Rajesh Kumar, Farmer from Punjab</cite>
+                    </blockquote>
+                </div>
+                
+                <div class="problem-visual">
+                    <div class="image-container">
+                        <img src="https://images.unsplash.com/photo-1500595046743-cd271d694d30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Diseased crops showing the problem farmers face" class="problem-image">
+                        <div class="image-overlay">
+                            <div class="overlay-text">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <p>Disease spreading rapidly</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Weather Dashboard -->
-        <section id="weather-section" class="weather-section hidden">
+    <!-- Our Solution Section -->
+    <section id="solution" class="solution-section">
+        <div class="container">
             <div class="section-header">
-                <h3>🌤️ Weather Intelligence Hub</h3>
-                <p>Real-time data + AI predictions for smarter farming decisions</p>
+                <h2>Our AI-Powered Solution</h2>
+                <p>Four powerful tools designed specifically for modern farmers</p>
             </div>
-
-            <div class="weather-grid">
-                <div class="current-weather glass-card">
-                    <div class="card-header">
-                        <h4>Right Now</h4>
-                        <div class="live-indicator">
-                            <span class="pulse-dot"></span> Live
-                        </div>
+            
+            <div class="solution-grid">
+                <div class="solution-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card-icon">
+                        <i class="fas fa-brain"></i>
                     </div>
-                    <div id="current-weather-info">
-                        <div class="weather-main">
-                            <div class="temp-display">
-                                <span id="temperature">--°C</span>
-                                <div class="weather-emoji">☀️</div>
-                            </div>
-                            <span id="weather-desc">Loading...</span>
-                        </div>
-                        <div class="weather-grid-details">
-                            <div class="weather-metric">
-                                <div class="metric-icon">💧</div>
-                                <div class="metric-data">
-                                    <span class="metric-value" id="humidity">--%</span>
-                                    <span class="metric-label">Humidity</span>
-                                </div>
-                            </div>
-                            <div class="weather-metric">
-                                <div class="metric-icon">💨</div>
-                                <div class="metric-data">
-                                    <span class="metric-value" id="wind-speed">-- km/h</span>
-                                    <span class="metric-label">Wind</span>
-                                </div>
-                            </div>
-                            <div class="weather-metric">
-                                <div class="metric-icon">🌧️</div>
-                                <div class="metric-data">
-                                    <span class="metric-value" id="rainfall">-- mm</span>
-                                    <span class="metric-label">Rain</span>
-                                </div>
-                            </div>
-                        </div>
+                    <h3>AI Crop Disease Detection</h3>
+                    <p>Upload a photo and get instant AI-powered diagnosis with 95% accuracy. Our neural networks analyze thousands of crop diseases in seconds.</p>
+                    <div class="card-features">
+                        <span class="feature-tag">Instant Results</span>
+                        <span class="feature-tag">95% Accurate</span>
+                        <span class="feature-tag">50+ Diseases</span>
+                    </div>
+                    <button class="card-cta">Try Now <i class="fas fa-arrow-right"></i></button>
+                </div>
+                
+                <div class="solution-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card-icon">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <h3>Multilingual Voice Support</h3>
+                    <p>Speak in your local language - Hindi, English, Punjabi, Bengali, Tamil, and more. Get voice guidance and explanations in the language you understand best.</p>
+                    <div class="card-features">
+                        <span class="feature-tag">15+ Languages</span>
+                        <span class="feature-tag">Voice Input</span>
+                        <span class="feature-tag">Audio Guide</span>
+                    </div>
+                    <button class="card-cta">Explore <i class="fas fa-arrow-right"></i></button>
+                </div>
+                
+                <div class="solution-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card-icon">
+                        <i class="fas fa-wifi-slash"></i>
+                    </div>
+                    <h3>Offline Mode</h3>
+                    <p>No internet? No problem! Our app works completely offline with pre-downloaded AI models. Perfect for rural areas with weak connectivity.</p>
+                    <div class="card-features">
+                        <span class="feature-tag">100% Offline</span>
+                        <span class="feature-tag">Pre-loaded AI</span>
+                        <span class="feature-tag">Rural Ready</span>
+                    </div>
+                    <button class="card-cta">Download <i class="fas fa-arrow-right"></i></button>
+                </div>
+                
+                <div class="solution-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="card-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Expert Connect</h3>
+                    <p>Connect directly with certified agronomists and crop specialists. Get personalized advice and treatment plans from agricultural experts.</p>
+                    <div class="card-features">
+                        <span class="feature-tag">Live Chat</span>
+                        <span class="feature-tag">Certified Experts</span>
+                        <span class="feature-tag">24/7 Support</span>
+                    </div>
+                    <button class="card-cta">Connect <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>How It Works</h2>
+                <p>Three simple steps to save your crops</p>
+            </div>
+            
+            <div class="steps-container">
+                <div class="step" data-aos="fade-right" data-aos-delay="100">
+                    <div class="step-icon">
+                        <i class="fas fa-camera"></i>
+                        <span class="step-number">1</span>
+                    </div>
+                    <div class="step-content">
+                        <h3>Upload Photo</h3>
+                        <p>Take a clear photo of the affected leaf or crop using your smartphone camera</p>
                     </div>
                 </div>
-
-                <div class="forecast-weather glass-card">
-                    <div class="card-header">
-                        <h4>7-Day Outlook</h4>
-                        <div class="ai-badge">🤖 AI Powered</div>
+                
+                <div class="step-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                
+                <div class="step" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-icon">
+                        <i class="fas fa-cogs"></i>
+                        <span class="step-number">2</span>
                     </div>
-                    <div id="forecast-info" class="forecast-grid">
-                        <!-- Forecast items will be populated by JavaScript -->
+                    <div class="step-content">
+                        <h3>AI Analysis</h3>
+                        <p>Our advanced AI analyzes the image using deep learning models trained on millions of crop images</p>
+                    </div>
+                </div>
+                
+                <div class="step-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                
+                <div class="step" data-aos="fade-left" data-aos-delay="300">
+                    <div class="step-icon">
+                        <i class="fas fa-prescription-bottle-alt"></i>
+                        <span class="step-number">3</span>
+                    </div>
+                    <div class="step-content">
+                        <h3>Get Remedies</h3>
+                        <p>Receive instant diagnosis with treatment recommendations, prevention tips, and expert advice</p>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Crop Recommendations -->
-        <section id="crops-section" class="crops-section hidden">
-            <div class="crops-container">
-                <div class="section-header">
-                    <h3>🎯 AI Crop Matcher</h3>
-                    <p>Get personalized crop recommendations based on your unique farm profile</p>
+    <!-- Demo Section -->
+    <section id="demo" class="demo-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Try Our AI in Action</h2>
+                <p>Upload a leaf photo to test our AI crop disease detection</p>
+            </div>
+            
+            <div class="demo-container">
+                <div class="upload-demo">
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-content">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h3>Drag & Drop Your Crop Photo</h3>
+                            <p>Or click to browse files</p>
+                            <p class="upload-note">Supports JPG, PNG, HEIC formats</p>
+                        </div>
+                        <input type="file" id="fileInput" accept="image/*" hidden>
+                    </div>
+                    
+                    <div class="upload-examples">
+                        <h4>Try with sample images:</h4>
+                        <div class="example-images">
+                            <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Diseased leaf example" class="example-img" onclick="loadSampleImage(this)">
+                            <img src="https://images.unsplash.com/photo-1592150621744-aca64f48394a?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Healthy leaf example" class="example-img" onclick="loadSampleImage(this)">
+                            <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Crop disease example" class="example-img" onclick="loadSampleImage(this)">
+                        </div>
+                    </div>
                 </div>
-
-                <div class="smart-filters">
-                    <div class="filter-group">
-                        <label>🗓️ Growing Season</label>
-                        <div class="custom-select">
-                            <select id="season-select">
-                                <option value="current">Current Season (Auto-detect)</option>
-                                <option value="kharif">🌧️ Kharif (Monsoon Vibes)</option>
-                                <option value="rabi">❄️ Rabi (Winter Chill)</option>
-                                <option value="zaid">☀️ Zaid (Summer Heat)</option>
-                            </select>
-                        </div>
+                
+                <div class="demo-results" id="demoResults">
+                    <div class="results-placeholder">
+                        <i class="fas fa-microscope"></i>
+                        <h3>AI Analysis Results</h3>
+                        <p>Upload an image to see the magic happen</p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                    <div class="filter-group">
-                        <label>🌍 Soil Type</label>
-                        <div class="custom-select">
-                            <select id="soil-type">
-                                <option value="loamy">🪨 Loamy (The Perfect Mix)</option>
-                                <option value="clay">🟤 Clay (Water Loving)</option>
-                                <option value="sandy">🏖️ Sandy (Quick Draining)</option>
-                                <option value="black">⚫ Black (Cotton Country)</option>
-                                <option value="red">🔴 Red (Iron Rich)</option>
-                            </select>
-                        </div>
+    <!-- Extra Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Features for New-Age Farmers</h2>
+                <p>Everything you need for modern, smart farming</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
                     </div>
-
-                    <button onclick="generateRecommendations()" class="ai-magic-btn">
-                        <span class="btn-icon">✨</span>
-                        <span class="btn-text">Generate Magic</span>
-                        <span class="btn-subtitle">AI Recommendations</span>
+                    <h3>Disease Forecast Dashboard</h3>
+                    <p>Weather-based predictions help you prepare for potential disease outbreaks before they happen.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h3>WhatsApp Integration</h3>
+                    <p>Get instant alerts, share photos, and receive guidance directly through WhatsApp.</p>
+                    <button class="whatsapp-btn">
+                        <i class="fab fa-whatsapp"></i>
+                        Connect on WhatsApp
                     </button>
                 </div>
-
-                <div id="crop-recommendations" class="modern-crop-grid">
-                    <!-- Crop recommendations will be populated here -->
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Community Forum</h3>
+                    <p>Connect with fellow farmers, share experiences, and learn from the farming community.</p>
                 </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>Success Stories</h3>
+                    <p>Read inspiring stories from farmers who've increased their yield using AgroDoc.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                <div class="insights-panel">
-                    <div class="insight-card">
-                        <div class="insight-icon">📊</div>
-                        <div class="insight-content">
-                            <h5>Market Insights</h5>
-                            <p>Real-time price trends and demand forecast</p>
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Farmers Choose AgroDoc</h2>
+                <p>The benefits that make the difference</p>
+            </div>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">💰</div>
+                    <h3>Affordable</h3>
+                    <p>Starting at just ₹99/month. Save thousands in crop losses with early detection.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">📱</div>
+                    <h3>Easy-to-use</h3>
+                    <p>Simple interface designed for farmers. No technical knowledge required.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">🗣️</div>
+                    <h3>Multilingual</h3>
+                    <p>Supports 15+ Indian languages. Farm in your native language.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">📶</div>
+                    <h3>Offline Ready</h3>
+                    <p>Works without internet. Perfect for rural areas with poor connectivity.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">📈</div>
+                    <h3>Increases Yield</h3>
+                    <p>Farmers report 25-40% increase in crop yield with early disease detection.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="team-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Meet Our Team</h2>
+                <p>Passionate individuals building the future of agriculture</p>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-image">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Ayush Khande">
+                    </div>
+                    <div class="team-info">
+                        <h3>Ayush Khande</h3>
+                        <p class="team-role">Founder & Lead Developer</p>
+                        <p class="team-bio">Full-stack developer passionate about AgTech solutions and AI innovations.</p>
+                        <div class="team-social">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
                         </div>
                     </div>
-                    <div class="insight-card">
-                        <div class="insight-icon">🌱</div>
-                        <div class="insight-content">
-                            <h5>Sustainability Score</h5>
-                            <p>Environmental impact and eco-friendliness rating</p>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-image">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b123?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Dr. Priya Sharma">
+                    </div>
+                    <div class="team-info">
+                        <h3>Dr. Priya Sharma</h3>
+                        <p class="team-role">Agricultural Scientist</p>
+                        <p class="team-bio">PhD in Plant Pathology with 10+ years of experience in crop disease research.</p>
+                        <div class="team-social">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fas fa-envelope"></i></a>
                         </div>
                     </div>
-                    <div class="insight-card">
-                        <div class="insight-icon">💰</div>
-                        <div class="insight-content">
-                            <h5>Profit Potential</h5>
-                            <p>Expected ROI and investment requirements</p>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-image">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Rahul Verma">
+                    </div>
+                    <div class="team-info">
+                        <h3>Rahul Verma</h3>
+                        <p class="team-role">AI/ML Engineer</p>
+                        <p class="team-bio">Machine Learning expert specializing in computer vision and neural networks.</p>
+                        <div class="team-social">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-image">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Sneha Patel">
+                    </div>
+                    <div class="team-info">
+                        <h3>Sneha Patel</h3>
+                        <p class="team-role">UX/UI Designer</p>
+                        <p class="team-bio">Design expert focused on creating farmer-friendly interfaces and experiences.</p>
+                        <div class="team-social">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-dribbble"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Farming Tips -->
-        <section class="tips-section">
-            <div class="tips-container">
-                <div class="section-header">
-                    <h3>💡 Pro Farming Hacks</h3>
-                    <p>Level up your farming game with these insider tips and tricks</p>
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-form-section">
+                    <h2>Get in Touch</h2>
+                    <p>Have questions? Want to partner with us? We'd love to hear from you.</p>
+                    
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <select id="subject" name="subject" required>
+                                <option value="">Choose a topic</option>
+                                <option value="demo">Demo Request</option>
+                                <option value="partnership">Partnership</option>
+                                <option value="support">Technical Support</option>
+                                <option value="feedback">Feedback</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary">Send Message</button>
+                    </form>
                 </div>
-                <div id="farming-tips" class="modern-tips-grid">
-                    <!-- Tips will be populated by JavaScript -->
-                </div>
-
-                <div class="community-section">
-                    <div class="community-card">
-                        <h4>🤝 Join the Community</h4>
-                        <p>Connect with 50K+ farmers, share experiences, and learn together!</p>
-                        <div class="community-actions">
-                            <button class="community-btn discord">
-                                <i class="fab fa-discord"></i> Discord
-                            </button>
-                            <button class="community-btn telegram">
-                                <i class="fab fa-telegram"></i> Telegram
-                            </button>
-                            <button class="community-btn whatsapp">
-                                <i class="fab fa-whatsapp"></i> WhatsApp
-                            </button>
+                
+                <div class="newsletter-section">
+                    <h2>Stay Updated</h2>
+                    <p>Subscribe to our newsletter for the latest updates on AI farming technology and product releases.</p>
+                    
+                    <form class="newsletter-form" id="newsletterForm">
+                        <div class="form-group">
+                            <label for="newsletter-email">Email Address</label>
+                            <input type="email" id="newsletter-email" name="email" required>
+                        </div>
+                        
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="updates" name="updates" checked>
+                            <label for="updates">Product updates and new features</label>
+                        </div>
+                        
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="tips" name="tips" checked>
+                            <label for="tips">Farming tips and best practices</label>
+                        </div>
+                        
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="events" name="events">
+                            <label for="events">Events and workshops</label>
+                        </div>
+                        
+                        <button type="submit" class="btn-secondary">Subscribe</button>
+                    </form>
+                    
+                    <div class="contact-info">
+                        <h3>Contact Information</h3>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>hello@agrodoc.ai</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+91 98765 43210</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Bangalore, India</span>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
+    <!-- Footer -->
     <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-brand">
-                <div class="brand-icon">🌱</div>
-                <div class="brand-text">
-                    <h4>FarmTech PRO</h4>
-                    <p>Next-gen agriculture for the digital farmer</p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="fas fa-seedling"></i>
+                        <span>AgroDoc</span>
+                    </div>
+                    <p>Smart AI Crop Doctor for New-Age Farmers. Empowering agriculture with artificial intelligence.</p>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Product</h4>
+                        <a href="#">Features</a>
+                        <a href="#">Demo</a>
+                        <a href="#">Pricing</a>
+                        <a href="#">API</a>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <a href="#">Documentation</a>
+                        <a href="#">Blog</a>
+                        <a href="#">Case Studies</a>
+                        <a href="#">Help Center</a>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <a href="#">About</a>
+                        <a href="#">Team</a>
+                        <a href="#">Careers</a>
+                        <a href="#">Contact</a>
+                    </div>
                 </div>
             </div>
-
-            <div class="footer-links">
-                <div class="link-group">
-                    <h5>Connect</h5>
-                    <a href="#"><i class="fab fa-github"></i> GitHub</a>
-                    <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
-                    <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
-                </div>
-                <div class="link-group">
-                    <h5>Community</h5>
-                    <a href="#"><i class="fab fa-discord"></i> Discord</a>
-                    <a href="#"><i class="fab fa-reddit"></i> Reddit</a>
-                    <a href="#"><i class="fas fa-blog"></i> Blog</a>
-                </div>
-                <div class="link-group">
-                    <h5>Support</h5>
-                    <a href="#"><i class="fas fa-question-circle"></i> Help Center</a>
-                    <a href="#"><i class="fas fa-envelope"></i> Contact</a>
-                    <a href="#"><i class="fas fa-bug"></i> Report Bug</a>
-                </div>
-            </div>
-
+            
             <div class="footer-bottom">
-                <p>&copy; 2024 FarmTech PRO - Built by <strong>Ayush Khande</strong> 🚀</p>
-                <div class="footer-badges">
-                    <span class="footer-badge">🏆 Hackathon Ready</span>
-                    <span class="footer-badge">🌱 Sustainable Tech</span>
-                    <span class="footer-badge">🤖 AI Powered</span>
+                <div class="footer-bottom-content">
+                    <p>&copy; 2024 AgroDoc. All rights reserved. Built for agricultural innovation.</p>
+                    <div class="footer-badges">
+                        <span class="badge">🏆 Hackathon Winner</span>
+                        <span class="badge">🚀 AI Powered</span>
+                        <span class="badge">🌱 Farmer Friendly</span>
+                    </div>
                 </div>
             </div>
         </div>

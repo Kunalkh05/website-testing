@@ -1,7 +1,7 @@
 {
-  "name": "farmer-solutions-hub",
+  "name": "agrodoc-ai-crop-doctor",
   "version": "1.0.0",
-  "description": "Smart farming solutions based on location, weather, and crop recommendations",
+  "description": "Smart AI Crop Doctor for New-Age Farmers - AI-powered crop disease detection platform",
   "main": "index.html",
   "scripts": {
     "dev": "vite",
@@ -12,10 +12,11 @@
     "vite": "^5.0.0"
   },
   "keywords": [
-    "farming",
     "agriculture",
-    "weather",
-    "crops",
+    "AI",
+    "crop disease detection",
+    "farming",
+    "machine learning",
     "hackathon"
   ],
   "author": "Ayush Khande",
