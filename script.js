@@ -1,1022 +1,927 @@
-// FarmTech Pro - Next-Gen JavaScript Functionality
+// AgroDoc - Smart AI Crop Doctor JavaScript
 
-// Global variables
-let userLocation = null;
-let weatherData = null;
-let isDarkMode = true;
-
-// Mock weather API for demonstration (replace with real API)
-const WEATHER_API_KEY = 'demo_key'; // Replace with actual API key
+// Global Variables
+let uploadedImage = null;
+let isDemoMode = false;
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
-    generateFarmingTips();
-    initializeTheme();
-    addModernInteractions();
+    setupScrollEffects();
+    setupDragAndDrop();
+    setupForms();
+    setupMobileMenu();
 });
 
-// Modern Gen Z Features
-function initializeTheme() {
-    const savedTheme = localStorage.getItem('farmtech-theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    isDarkMode = savedTheme === 'dark';
-
-    const themeIcon = document.querySelector('.theme-toggle i');
-    if (themeIcon) {
-        themeIcon.className = isDarkMode ? 'fas fa-sun' : 'fas fa-moon';
-    }
-}
-
-function toggleTheme() {
-    isDarkMode = !isDarkMode;
-    const newTheme = isDarkMode ? 'dark' : 'light';
-
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('farmtech-theme', newTheme);
-
-    const themeIcon = document.querySelector('.theme-toggle i');
-    if (themeIcon) {
-        themeIcon.className = isDarkMode ? 'fas fa-sun' : 'fas fa-moon';
-    }
-
-    // Add smooth transition effect
-    document.body.style.transition = 'all 0.3s ease';
-    setTimeout(() => {
-        document.body.style.transition = '';
-    }, 300);
-
-    showNotification(isDarkMode ? '🌙 Dark mode activated!' : '☀️ Light mode activated!');
-}
-
-function shareApp() {
-    if (navigator.share) {
-        navigator.share({
-            title: '🌱 FarmTech Pro - Next-Gen Agriculture',
-            text: 'Check out this amazing farming app with AI-powered crop recommendations!',
-            url: window.location.href
-        }).catch(console.error);
-    } else {
-        // Fallback for browsers that don't support Web Share API
-        navigator.clipboard.writeText(window.location.href).then(() => {
-            showNotification('🔗 Link copied to clipboard!');
-        }).catch(() => {
-            showNotification('❌ Unable to share. Try copying the URL manually.');
-        });
-    }
-}
-
-function watchDemo() {
-    showNotification('🎬 Demo feature coming soon! Follow us for updates.');
-    // Placeholder for demo functionality
-}
-
-function showNotification(message, duration = 3000) {
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.className = 'modern-notification';
-    notification.innerHTML = `
-        <div class="notification-content">
-            <span>${message}</span>
-            <button onclick="this.parentElement.parentElement.remove()" class="notification-close">×</button>
-        </div>
-    `;
-
-    // Add styles
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(20px);
-        border-radius: 12px;
-        padding: 1rem 1.5rem;
-        color: var(--text-primary);
-        z-index: 10000;
-        animation: slideInRight 0.3s ease;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        max-width: 350px;
-    `;
-
-    document.body.appendChild(notification);
-
-    // Auto remove after duration
-    setTimeout(() => {
-        if (notification.parentElement) {
-            notification.style.animation = 'slideOutRight 0.3s ease';
-            setTimeout(() => notification.remove(), 300);
-        }
-    }, duration);
-}
-
-function addModernInteractions() {
-    // Add subtle animations to cards
-    const cards = document.querySelectorAll('.glass-card, .crop-card, .tip-card');
-    cards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-5px) scale(1.02)';
-        });
-
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-    });
-
-    // Add parallax effect to background elements
-    let ticking = false;
-
-    function updateParallax() {
-        const scrolled = window.pageYOffset;
-        const parallaxElements = document.querySelectorAll('.floating-shapes .shape');
-
-        parallaxElements.forEach((element, index) => {
-            const rate = scrolled * -0.5 * (index + 1) * 0.1;
-            element.style.transform = `translateY(${rate}px) rotate(${scrolled * 0.05}deg)`;
-        });
-
-        ticking = false;
-    }
-
-    window.addEventListener('scroll', function() {
-        if (!ticking) {
-            requestAnimationFrame(updateParallax);
-            ticking = true;
-        }
-    });
-
-    // Add CSS animations
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        @keyframes slideOutRight {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
-        }
-
-        .notification-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .notification-close {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.2rem;
-            cursor: pointer;
-            padding: 0;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: all 0.2s ease;
-        }
-
-        .notification-close:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(1.1);
-        }
-    `;
-    document.head.appendChild(style);
-}
-
+// Main initialization function
 function initializeApp() {
-    console.log('FarmWise Application Initialized');
+    console.log('AgroDoc Application Initialized');
+    addLoadingAnimations();
+}
+
+// Smooth scrolling functions
+function scrollToDemo() {
+    document.getElementById('demo').scrollIntoView({ 
+        behavior: 'smooth' 
+    });
+}
+
+function scrollToSolution() {
+    document.getElementById('solution').scrollIntoView({ 
+        behavior: 'smooth' 
+    });
+}
+
+// Setup scroll effects and navbar behavior
+function setupScrollEffects() {
+    const navbar = document.querySelector('.navbar');
+    const navLinks = document.querySelectorAll('.nav-link');
     
-    // Add smooth scrolling to navigation links
-    document.querySelectorAll('.nav-link').forEach(link => {
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 100) {
+            navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+        } else {
+            navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            navbar.style.boxShadow = 'none';
+        }
+    });
+    
+    // Active navigation highlighting
+    const sections = document.querySelectorAll('section[id]');
+    
+    window.addEventListener('scroll', function() {
+        const scrollPosition = window.scrollY + 100;
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            const sectionId = section.getAttribute('id');
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${sectionId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    });
+    
+    // Smooth scroll for navigation links
+    navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             const targetId = this.getAttribute('href').substring(1);
-            const targetElement = document.getElementById(targetId);
-            if (targetElement) {
-                targetElement.scrollIntoView({ behavior: 'smooth' });
+            const targetSection = document.getElementById(targetId);
+            
+            if (targetSection) {
+                targetSection.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             }
         });
     });
 }
 
-// Location Functions
-function getLocation() {
-    const locationSection = document.getElementById('location-section');
-    const locationText = document.getElementById('location-text');
+// Setup drag and drop functionality for demo section
+function setupDragAndDrop() {
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    const demoResults = document.getElementById('demoResults');
     
-    locationSection.classList.remove('hidden');
-    locationText.textContent = 'Getting your location...';
+    if (!uploadArea || !fileInput || !demoResults) return;
     
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                userLocation = {
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude
-                };
-                displayLocation(userLocation);
-                getWeatherData(userLocation);
-            },
-            (error) => {
-                handleLocationError(error);
-            }
-        );
-    } else {
-        locationText.textContent = 'Geolocation is not supported by this browser.';
-        // Use demo location for testing
-        userLocation = { latitude: 28.6139, longitude: 77.2090 }; // Delhi coordinates
-        displayLocation(userLocation);
-        getWeatherData(userLocation);
-    }
-}
-
-function displayLocation(location) {
-    const locationText = document.getElementById('location-text');
-    const coordinates = document.getElementById('coordinates');
+    // Click to upload
+    uploadArea.addEventListener('click', function() {
+        fileInput.click();
+    });
     
-    locationText.textContent = 'Location detected successfully!';
-    coordinates.textContent = `Lat: ${location.latitude.toFixed(4)}, Lng: ${location.longitude.toFixed(4)}`;
+    // File input change
+    fileInput.addEventListener('change', function() {
+        const file = this.files[0];
+        if (file) {
+            handleFileUpload(file);
+        }
+    });
     
-    // Show weather section
-    document.getElementById('weather-section').classList.remove('hidden');
-    document.getElementById('crops-section').classList.remove('hidden');
-}
-
-function handleLocationError(error) {
-    const locationText = document.getElementById('location-text');
-    let errorMessage = 'Unable to get your location. ';
+    // Drag and drop events
+    uploadArea.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        this.style.borderColor = '#ff8500';
+        this.style.backgroundColor = '#fff8f3';
+    });
     
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            errorMessage += 'Location access denied by user.';
-            break;
-        case error.POSITION_UNAVAILABLE:
-            errorMessage += 'Location information is unavailable.';
-            break;
-        case error.TIMEOUT:
-            errorMessage += 'Location request timed out.';
-            break;
-        default:
-            errorMessage += 'An unknown error occurred.';
-            break;
-    }
+    uploadArea.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        this.style.borderColor = '#2d5a27';
+        this.style.backgroundColor = '#ffffff';
+    });
     
-    locationText.textContent = errorMessage + ' Using demo location (Delhi, India).';
-    
-    // Use demo location
-    userLocation = { latitude: 28.6139, longitude: 77.2090 };
-    displayLocation(userLocation);
-    getWeatherData(userLocation);
-}
-
-// Weather Functions
-async function getWeatherData(location) {
-    try {
-        // For demo purposes, we'll use mock data
-        // In production, replace with actual weather API call
-        const mockWeatherData = generateMockWeather(location);
-        weatherData = mockWeatherData;
-        displayCurrentWeather(mockWeatherData.current);
-        displayWeatherForecast(mockWeatherData.forecast);
-    } catch (error) {
-        console.error('Error fetching weather data:', error);
-        displayWeatherError();
-    }
-}
-
-function generateMockWeather(location) {
-    const seasons = ['spring', 'summer', 'monsoon', 'winter'];
-    const currentSeason = seasons[Math.floor(Math.random() * seasons.length)];
-    
-    let baseTemp, baseHumidity, baseRainfall;
-    
-    switch(currentSeason) {
-        case 'summer':
-            baseTemp = 35;
-            baseHumidity = 40;
-            baseRainfall = 2;
-            break;
-        case 'monsoon':
-            baseTemp = 28;
-            baseHumidity = 85;
-            baseRainfall = 25;
-            break;
-        case 'winter':
-            baseTemp = 15;
-            baseHumidity = 60;
-            baseRainfall = 1;
-            break;
-        default: // spring
-            baseTemp = 25;
-            baseHumidity = 65;
-            baseRainfall = 8;
-    }
-    
-    return {
-        current: {
-            temperature: baseTemp + Math.floor(Math.random() * 10) - 5,
-            description: getWeatherDescription(currentSeason),
-            humidity: baseHumidity + Math.floor(Math.random() * 20) - 10,
-            windSpeed: Math.floor(Math.random() * 15) + 5,
-            rainfall: baseRainfall + Math.floor(Math.random() * 10)
-        },
-        forecast: generateWeatherForecast(baseTemp, baseHumidity)
-    };
-}
-
-function getWeatherDescription(season) {
-    const descriptions = {
-        summer: ['Hot and dry', 'Sunny', 'Clear skies', 'Very hot'],
-        monsoon: ['Rainy', 'Cloudy', 'Heavy rainfall', 'Thunderstorms'],
-        winter: ['Cool and dry', 'Clear', 'Cold', 'Foggy morning'],
-        spring: ['Pleasant', 'Partly cloudy', 'Mild', 'Fresh breeze']
-    };
-    
-    const seasonDescriptions = descriptions[season] || descriptions.spring;
-    return seasonDescriptions[Math.floor(Math.random() * seasonDescriptions.length)];
-}
-
-function generateWeatherForecast(baseTemp, baseHumidity) {
-    const forecast = [];
-    const days = ['Today', 'Tomorrow', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'];
-    
-    for (let i = 0; i < 7; i++) {
-        forecast.push({
-            day: days[i],
-            temperature: baseTemp + Math.floor(Math.random() * 8) - 4,
-            condition: ['Sunny', 'Cloudy', 'Rainy', 'Partly Cloudy'][Math.floor(Math.random() * 4)],
-            icon: ['☀️', '☁️', '🌧️', '⛅'][Math.floor(Math.random() * 4)]
-        });
-    }
-    
-    return forecast;
-}
-
-function displayCurrentWeather(weather) {
-    document.getElementById('temperature').textContent = `${weather.temperature}°C`;
-    document.getElementById('weather-desc').textContent = weather.description;
-    document.getElementById('humidity').textContent = `${weather.humidity}%`;
-    document.getElementById('wind-speed').textContent = `${weather.windSpeed} km/h`;
-    document.getElementById('rainfall').textContent = `${weather.rainfall} mm`;
-}
-
-function displayWeatherForecast(forecast) {
-    const forecastContainer = document.getElementById('forecast-info');
-    forecastContainer.innerHTML = '';
-    
-    forecast.forEach(day => {
-        const forecastItem = document.createElement('div');
-        forecastItem.className = 'forecast-item';
-        forecastItem.innerHTML = `
-            <div style="font-size: 2rem; margin-bottom: 0.5rem;">${day.icon}</div>
-            <div style="font-weight: 600; margin-bottom: 0.25rem;">${day.day}</div>
-            <div style="color: var(--primary-green); font-weight: 600;">${day.temperature}°C</div>
-            <div style="font-size: 0.9rem; color: var(--text-light);">${day.condition}</div>
-        `;
-        forecastContainer.appendChild(forecastItem);
+    uploadArea.addEventListener('drop', function(e) {
+        e.preventDefault();
+        this.style.borderColor = '#2d5a27';
+        this.style.backgroundColor = '#ffffff';
+        
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            handleFileUpload(files[0]);
+        }
     });
 }
 
-function displayWeatherError() {
-    document.getElementById('temperature').textContent = 'N/A';
-    document.getElementById('weather-desc').textContent = 'Weather data unavailable';
-    document.getElementById('humidity').textContent = 'N/A';
-    document.getElementById('wind-speed').textContent = 'N/A';
-    document.getElementById('rainfall').textContent = 'N/A';
-}
-
-// Crop Recommendation Functions
-function generateRecommendations() {
-    const season = document.getElementById('season-select').value;
-    const soilType = document.getElementById('soil-type').value;
-    const recommendationsContainer = document.getElementById('crop-recommendations');
+// Handle file upload and AI analysis simulation
+function handleFileUpload(file) {
+    if (!file.type.startsWith('image/')) {
+        showNotification('Please upload an image file (JPG, PNG, HEIC)', 'error');
+        return;
+    }
     
-    const recommendations = getCropRecommendations(season, soilType);
-    displayCropRecommendations(recommendations);
-}
-
-function getCropRecommendations(season, soilType) {
-    const cropDatabase = {
-        kharif: {
-            loamy: [
-                {
-                    name: 'Rice',
-                    icon: '🌾',
-                    season: 'Kharif',
-                    waterReq: 'High',
-                    duration: '120-150 days',
-                    benefits: ['💰 Stable Income', '🏠 Local Favorite', '📈 Reliable Market'],
-                    profitScore: 85,
-                    sustainabilityScore: 75,
-                    difficulty: 'Easy',
-                    trendy: false
-                },
-                {
-                    name: 'Organic Cotton',
-                    icon: '🌿',
-                    season: 'Kharif',
-                    waterReq: 'Medium',
-                    duration: '180-200 days',
-                    benefits: ['🌍 Eco-Friendly', '💎 Premium Price', '🚀 Export Ready'],
-                    profitScore: 92,
-                    sustainabilityScore: 95,
-                    difficulty: 'Medium',
-                    trendy: true
-                },
-                {
-                    name: 'Smart Sugarcane',
-                    icon: '🎋',
-                    season: 'Kharif',
-                    waterReq: 'High',
-                    duration: '300-365 days',
-                    benefits: ['💵 Year-round Cash', '🔄 Multiple Products', '📊 Stable Returns'],
-                    profitScore: 88,
-                    sustainabilityScore: 70,
-                    difficulty: 'Hard',
-                    trendy: false
-                }
-            ],
-            clay: [
-                {
-                    name: 'Premium Rice',
-                    icon: '🌾',
-                    season: 'Kharif',
-                    waterReq: 'High',
-                    duration: '120-150 days',
-                    benefits: ['🎯 Perfect Match', '💧 Water Smart', '📈 High Yield'],
-                    profitScore: 87,
-                    sustainabilityScore: 80,
-                    difficulty: 'Easy',
-                    trendy: false
-                },
-                {
-                    name: 'Eco Jute',
-                    icon: '🌱',
-                    season: 'Kharif',
-                    waterReq: 'High',
-                    duration: '120 days',
-                    benefits: ['♻️ Sustainable', '🏭 Industrial Demand', '🌱 Soil Friendly'],
-                    profitScore: 78,
-                    sustainabilityScore: 98,
-                    difficulty: 'Medium',
-                    trendy: true
-                }
-            ],
-            sandy: [
-                {
-                    name: 'SuperFood Millets',
-                    icon: '🌾',
-                    season: 'Kharif',
-                    waterReq: 'Low',
-                    duration: '90-120 days',
-                    benefits: ['🏃‍♂️ Health Trend', '💪 Drought Proof', '💰 Low Investment'],
-                    profitScore: 82,
-                    sustainabilityScore: 95,
-                    difficulty: 'Easy',
-                    trendy: true
-                },
-                {
-                    name: 'Premium Groundnut',
-                    icon: '🥜',
-                    season: 'Kharif',
-                    waterReq: 'Medium',
-                    duration: '100-130 days',
-                    benefits: ['🛢️ Oil Gold', '🌱 Soil Booster', '📊 Solid Market'],
-                    profitScore: 85,
-                    sustainabilityScore: 85,
-                    difficulty: 'Medium',
-                    trendy: false
-                }
-            ]
-        },
-        rabi: {
-            loamy: [
-                { name: 'Wheat', icon: '🌾', season: 'Rabi', waterReq: 'Medium', duration: '120-150 days', benefits: ['Staple crop', 'Good storage', 'Stable market'] },
-                { name: 'Mustard', icon: '🌻', season: 'Rabi', waterReq: 'Low', duration: '90-120 days', benefits: ['Oil seed', 'Short duration', 'Multiple uses'] },
-                { name: 'Peas', icon: '🟢', season: 'Rabi', waterReq: 'Medium', duration: '90-110 days', benefits: ['Vegetable crop', 'Protein rich', 'Nitrogen fixation'] }
-            ],
-            clay: [
-                { name: 'Gram', icon: '🌰', season: 'Rabi', waterReq: 'Low', duration: '90-120 days', benefits: ['Pulse crop', 'Drought tolerant', 'Soil improvement'] },
-                { name: 'Lentil', icon: '🔴', season: 'Rabi', waterReq: 'Low', duration: '90-110 days', benefits: ['High protein', 'Low water need', 'Good price'] }
-            ],
-            sandy: [
-                { name: 'Barley', icon: '🌾', season: 'Rabi', waterReq: 'Low', duration: '90-120 days', benefits: ['Drought resistant', 'Animal feed', 'Brewing industry'] },
-                { name: 'Cumin', icon: '🌿', season: 'Rabi', waterReq: 'Low', duration: '100-120 days', benefits: ['Spice crop', 'High value', 'Export potential'] }
-            ]
-        },
-        zaid: {
-            loamy: [
-                { name: 'Watermelon', icon: '🍉', season: 'Zaid', waterReq: 'High', duration: '90-100 days', benefits: ['Summer fruit', 'High water content', 'Good market'] },
-                { name: 'Cucumber', icon: '🥒', season: 'Zaid', waterReq: 'High', duration: '50-70 days', benefits: ['Quick harvest', 'Vegetable crop', 'Cooling effect'] },
-                { name: 'Fodder crops', icon: '🌱', season: 'Zaid', waterReq: 'Medium', duration: '45-60 days', benefits: ['Animal feed', 'Quick growing', 'Soil cover'] }
-            ]
-        }
+    uploadedImage = file;
+    const reader = new FileReader();
+    
+    reader.onload = function(e) {
+        displayUploadedImage(e.target.result);
+        simulateAIAnalysis();
     };
     
-    // Default recommendations for current season
-    if (season === 'current') {
-        const currentMonth = new Date().getMonth() + 1;
-        if (currentMonth >= 6 && currentMonth <= 10) {
-            return cropDatabase.kharif[soilType] || cropDatabase.kharif.loamy;
-        } else if (currentMonth >= 11 || currentMonth <= 3) {
-            return cropDatabase.rabi[soilType] || cropDatabase.rabi.loamy;
-        } else {
-            return cropDatabase.zaid[soilType] || cropDatabase.zaid.loamy;
-        }
-    }
+    reader.readAsDataURL(file);
+}
+
+// Display uploaded image in demo area
+function displayUploadedImage(imageSrc) {
+    const uploadArea = document.getElementById('uploadArea');
     
-    return cropDatabase[season]?.[soilType] || cropDatabase.kharif.loamy;
-}
-
-function displayCropRecommendations(recommendations) {
-    const container = document.getElementById('crop-recommendations');
-    container.innerHTML = '';
-
-    recommendations.forEach((crop, index) => {
-        const cropCard = document.createElement('div');
-        cropCard.className = 'crop-card';
-
-        // Add animation delay
-        cropCard.style.animationDelay = `${index * 0.1}s`;
-        cropCard.style.animation = 'slideInUp 0.6s ease-out both';
-
-        const benefitTags = crop.benefits.map(benefit =>
-            `<span class="benefit-tag">${benefit}</span>`
-        ).join('');
-
-        const trendyBadge = crop.trendy ? '<span class="trendy-badge">🔥 Trending</span>' : '';
-        const difficultyColor = crop.difficulty === 'Easy' ? '#4ade80' : crop.difficulty === 'Medium' ? '#f59e0b' : '#ef4444';
-
-        cropCard.innerHTML = `
-            <div class="crop-header">
-                <div class="crop-title-section">
-                    <span class="crop-icon">${crop.icon}</span>
-                    <div>
-                        <h4>${crop.name} ${trendyBadge}</h4>
-                        <div class="crop-meta">
-                            <span class="difficulty-badge" style="background: ${difficultyColor}20; color: ${difficultyColor}; border: 1px solid ${difficultyColor}40;">
-                                ${crop.difficulty} Level
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="crop-scores">
-                <div class="score-item">
-                    <div class="score-circle" style="background: conic-gradient(#4ade80 ${crop.profitScore}%, #333 ${crop.profitScore}%)">
-                        <span>${crop.profitScore}</span>
-                    </div>
-                    <label>💰 Profit Score</label>
-                </div>
-                <div class="score-item">
-                    <div class="score-circle" style="background: conic-gradient(#06d6a0 ${crop.sustainabilityScore}%, #333 ${crop.sustainabilityScore}%)">
-                        <span>${crop.sustainabilityScore}</span>
-                    </div>
-                    <label>🌱 Eco Score</label>
-                </div>
-            </div>
-
-            <div class="crop-details">
-                <div class="detail-item">
-                    <span class="detail-icon">🗓️</span>
-                    <div>
-                        <strong>Growing Time</strong>
-                        <span>${crop.duration}</span>
-                    </div>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-icon">💧</span>
-                    <div>
-                        <strong>Water Needs</strong>
-                        <span>${crop.waterReq}</span>
-                    </div>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-icon">🌤️</span>
-                    <div>
-                        <strong>Season</strong>
-                        <span>${crop.season}</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="crop-benefits">
-                <h5>✨ Why This Rocks:</h5>
-                <div class="benefit-tags">
-                    ${benefitTags}
-                </div>
-            </div>
-
-            <div class="crop-actions">
-                <button class="action-btn primary" onclick="selectCrop('${crop.name}')">
-                    <i class="fas fa-check"></i> Choose This Crop
-                </button>
-                <button class="action-btn secondary" onclick="learnMore('${crop.name}')">
-                    <i class="fas fa-info-circle"></i> Learn More
-                </button>
-            </div>
-        `;
-
-        container.appendChild(cropCard);
-    });
-
-    // Add the modern styles
-    addCropCardStyles();
-}
-
-function selectCrop(cropName) {
-    showNotification(`🎉 Great choice! ${cropName} added to your farm plan. Check your dashboard for next steps!`);
-
-    // Add to local storage or send to backend
-    const selectedCrops = JSON.parse(localStorage.getItem('selectedCrops') || '[]');
-    if (!selectedCrops.includes(cropName)) {
-        selectedCrops.push(cropName);
-        localStorage.setItem('selectedCrops', JSON.stringify(selectedCrops));
-    }
-}
-
-function learnMore(cropName) {
-    showNotification(`📚 Opening detailed guide for ${cropName}...`);
-    // Placeholder for detailed crop information
-}
-
-function addCropCardStyles() {
-    if (document.getElementById('crop-card-styles')) return;
-
-    const style = document.createElement('style');
-    style.id = 'crop-card-styles';
-    style.textContent = `
-        .crop-title-section {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            width: 100%;
-        }
-
-        .crop-meta {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-
-        .trendy-badge {
-            background: linear-gradient(45deg, #ff6b6b, #feca57);
-            color: white;
-            padding: 0.2rem 0.6rem;
-            border-radius: 12px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            margin-left: 0.5rem;
-            animation: pulse 2s infinite;
-        }
-
-        .difficulty-badge {
-            padding: 0.2rem 0.6rem;
-            border-radius: 8px;
-            font-size: 0.7rem;
-            font-weight: 600;
-        }
-
-        .crop-scores {
-            display: flex;
-            justify-content: space-around;
-            margin: 1.5rem 0;
-        }
-
-        .score-item {
-            text-align: center;
-        }
-
-        .score-circle {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 0.5rem;
-            position: relative;
-            color: white;
-            font-weight: 700;
-            font-size: 0.9rem;
-        }
-
-        .score-item label {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            display: block;
-        }
-
-        .detail-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .detail-icon {
-            font-size: 1.2rem;
-            width: 24px;
-            text-align: center;
-        }
-
-        .detail-item div {
-            display: flex;
-            flex-direction: column;
-            gap: 0.1rem;
-        }
-
-        .detail-item strong {
-            color: var(--text-primary);
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .detail-item span {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-        }
-
-        .crop-actions {
-            display: flex;
-            gap: 0.75rem;
-            margin-top: 1.5rem;
-        }
-
-        .action-btn {
-            flex: 1;
-            padding: 0.75rem;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            font-size: 0.85rem;
-        }
-
-        .action-btn.primary {
-            background: var(--primary-gradient);
-            color: white;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-        }
-
-        .action-btn.secondary {
-            background: var(--glass-bg);
-            color: var(--text-primary);
-            border: 1px solid var(--border-glass);
-        }
-
-        .action-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .action-btn.primary:hover {
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        .action-btn.secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
+    uploadArea.innerHTML = `
+        <div class="uploaded-image">
+            <img src="${imageSrc}" alt="Uploaded crop image" style="max-width: 100%; max-height: 200px; border-radius: 8px; object-fit: cover;">
+            <p style="margin-top: 1rem; color: #2d5a27; font-weight: 600;">
+                <i class="fas fa-check-circle"></i> Image uploaded successfully
+            </p>
+            <button onclick="resetUpload()" style="margin-top: 0.5rem; background: transparent; border: 2px solid #2d5a27; color: #2d5a27; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">
+                Upload Different Image
+            </button>
+        </div>
     `;
-    document.head.appendChild(style);
 }
 
-// Farming Tips Functions - Gen Z Edition
-function generateFarmingTips() {
-    const tips = [
+// Reset upload area
+function resetUpload() {
+    const uploadArea = document.getElementById('uploadArea');
+    uploadArea.innerHTML = `
+        <div class="upload-content">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <h3>Drag & Drop Your Crop Photo</h3>
+            <p>Or click to browse files</p>
+            <p class="upload-note">Supports JPG, PNG, HEIC formats</p>
+        </div>
+    `;
+    
+    // Reset results
+    const demoResults = document.getElementById('demoResults');
+    demoResults.innerHTML = `
+        <div class="results-placeholder">
+            <i class="fas fa-microscope"></i>
+            <h3>AI Analysis Results</h3>
+            <p>Upload an image to see the magic happen</p>
+        </div>
+    `;
+    
+    uploadedImage = null;
+}
+
+// Simulate AI analysis with realistic results
+function simulateAIAnalysis() {
+    const demoResults = document.getElementById('demoResults');
+    
+    // Show loading state
+    demoResults.innerHTML = `
+        <div class="analysis-loading">
+            <div class="loading-spinner"></div>
+            <h3>AI Analysis in Progress...</h3>
+            <p>Analyzing crop health using deep learning models</p>
+            <div class="loading-steps">
+                <div class="loading-step active">📷 Image preprocessing</div>
+                <div class="loading-step">🧠 Neural network analysis</div>
+                <div class="loading-step">🔍 Disease detection</div>
+                <div class="loading-step">💊 Treatment recommendations</div>
+            </div>
+        </div>
+    `;
+    
+    // Add loading styles
+    addLoadingStyles();
+    
+    // Simulate progressive loading
+    setTimeout(() => {
+        updateLoadingStep(1);
+    }, 800);
+    
+    setTimeout(() => {
+        updateLoadingStep(2);
+    }, 1600);
+    
+    setTimeout(() => {
+        updateLoadingStep(3);
+    }, 2400);
+    
+    setTimeout(() => {
+        showAnalysisResults();
+    }, 3200);
+}
+
+// Update loading steps
+function updateLoadingStep(stepIndex) {
+    const steps = document.querySelectorAll('.loading-step');
+    if (steps[stepIndex]) {
+        steps[stepIndex].classList.add('active');
+    }
+}
+
+// Show realistic AI analysis results
+function showAnalysisResults() {
+    const diseases = [
         {
-            title: "Soil Health Check 🧪",
-            content: "Get your soil tested like you'd check your phone battery! Test pH and nutrients every 2-3 years to keep your crops happy and thriving.",
-            category: "Science",
-            icon: "🔬",
-            trending: true
+            name: "Early Blight",
+            confidence: 92,
+            severity: "Moderate",
+            crop: "Tomato",
+            treatment: "Apply copper-based fungicide",
+            prevention: "Improve air circulation, avoid overhead watering",
+            urgency: "medium"
         },
         {
-            title: "Smart Water Game 💧",
-            content: "Level up with drip irrigation and smart sprinklers. It's like having precision controls for your farm - save water, boost yields, win the game!",
-            category: "Tech",
-            icon: "💻",
-            trending: true
+            name: "Leaf Spot Disease",
+            confidence: 87,
+            severity: "Mild",
+            crop: "Potato",
+            treatment: "Remove affected leaves, apply organic fungicide",
+            prevention: "Crop rotation, proper spacing",
+            urgency: "low"
         },
         {
-            title: "Crop Rotation Strategy 🔄",
-            content: "Think of it as a playlist shuffle for your fields! Rotate crops to keep soil healthy and pests confused. Diversity is key! 🎵",
-            category: "Strategy",
-            icon: "🎯",
-            trending: false
-        },
-        {
-            title: "Weather Radar On 🌤️",
-            content: "Stay updated like you check social media! Use weather apps and forecasts to time your farming activities perfectly. No more weather surprises!",
-            category: "Planning",
-            icon: "📱",
-            trending: true
-        },
-        {
-            title: "Go Organic, Go Viral 🌱",
-            content: "Organic farming is the trend that actually matters! Use natural fertilizers and pest control. Your soil will thank you, and so will the planet! 🌍",
-            category: "Sustainability",
-            icon: "♻️",
-            trending: true
-        },
-        {
-            title: "Market Intelligence 📊",
-            content: "Do your research before planting! Check market trends, pricing, and demand. It's like checking reviews before buying - but for crops! 💰",
-            category: "Business",
-            icon: "💡",
-            trending: false
-        },
-        {
-            title: "IoT & Sensors 🤖",
-            content: "Embrace the future with smart sensors! Monitor soil moisture, temperature, and crop health in real-time. Farm like it's 2024! 🚀",
-            category: "Innovation",
-            icon: "📡",
-            trending: true
-        },
-        {
-            title: "Social Farming 🤝",
-            content: "Connect with other farmers online! Share experiences, ask questions, and learn from the community. Farming is better together! 💪",
-            category: "Community",
-            icon: "👥",
-            trending: true
+            name: "Powdery Mildew",
+            confidence: 95,
+            severity: "High",
+            crop: "Wheat",
+            treatment: "Apply sulfur-based fungicide immediately",
+            prevention: "Ensure proper ventilation, avoid overcrowding",
+            urgency: "high"
         }
     ];
     
-    const tipsContainer = document.getElementById('farming-tips');
-    tipsContainer.innerHTML = '';
-
-    tips.forEach((tip, index) => {
-        const tipCard = document.createElement('div');
-        tipCard.className = 'tip-card modern-tip';
-
-        // Add animation delay
-        tipCard.style.animationDelay = `${index * 0.1}s`;
-        tipCard.style.animation = 'slideInUp 0.6s ease-out both';
-
-        const trendingBadge = tip.trending ? '<span class="trending-badge">🔥 Trending</span>' : '';
-
-        tipCard.innerHTML = `
-            <div class="tip-header">
-                <div class="tip-icon">${tip.icon}</div>
-                <div class="tip-category">${tip.category}</div>
-                ${trendingBadge}
+    const randomDisease = diseases[Math.floor(Math.random() * diseases.length)];
+    const demoResults = document.getElementById('demoResults');
+    
+    demoResults.innerHTML = `
+        <div class="analysis-results">
+            <div class="result-header">
+                <div class="confidence-circle" data-confidence="${randomDisease.confidence}">
+                    <span>${randomDisease.confidence}%</span>
+                </div>
+                <div class="result-info">
+                    <h3>${randomDisease.name}</h3>
+                    <p class="crop-type">Detected in ${randomDisease.crop}</p>
+                    <span class="severity-badge ${randomDisease.urgency}">${randomDisease.severity} Severity</span>
+                </div>
             </div>
-            <h4>${tip.title}</h4>
-            <p>${tip.content}</p>
-            <div class="tip-actions">
-                <button class="tip-action-btn" onclick="saveTip('${tip.title}')">
-                    <i class="fas fa-bookmark"></i> Save
+            
+            <div class="result-details">
+                <div class="detail-section">
+                    <h4><i class="fas fa-prescription-bottle-alt"></i> Treatment</h4>
+                    <p>${randomDisease.treatment}</p>
+                </div>
+                
+                <div class="detail-section">
+                    <h4><i class="fas fa-shield-alt"></i> Prevention</h4>
+                    <p>${randomDisease.prevention}</p>
+                </div>
+                
+                <div class="urgency-indicator ${randomDisease.urgency}">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Action needed: ${randomDisease.urgency === 'high' ? 'Immediate' : randomDisease.urgency === 'medium' ? 'Within 48 hours' : 'Monitor closely'}</span>
+                </div>
+            </div>
+            
+            <div class="result-actions">
+                <button class="btn-primary" onclick="connectExpert()">
+                    <i class="fas fa-user-tie"></i> Connect with Expert
                 </button>
-                <button class="tip-action-btn" onclick="shareTip('${tip.title}')">
-                    <i class="fas fa-share"></i> Share
-                </button>
-                <button class="tip-action-btn" onclick="likeTip('${tip.title}')">
-                    <i class="fas fa-heart"></i> Like
+                <button class="btn-secondary" onclick="saveReport()">
+                    <i class="fas fa-download"></i> Save Report
                 </button>
             </div>
-        `;
-
-        tipsContainer.appendChild(tipCard);
-    });
-
-    // Add modern tip styles
-    addModernTipStyles();
+        </div>
+    `;
+    
+    // Add result styles
+    addResultStyles();
+    
+    // Animate confidence circle
+    animateConfidenceCircle(randomDisease.confidence);
 }
 
-function saveTip(tipTitle) {
-    const savedTips = JSON.parse(localStorage.getItem('savedTips') || '[]');
-    if (!savedTips.includes(tipTitle)) {
-        savedTips.push(tipTitle);
-        localStorage.setItem('savedTips', JSON.stringify(savedTips));
-        showNotification(`💾 "${tipTitle}" saved to your collection!`);
-    } else {
-        showNotification(`⚠️ You've already saved this tip!`);
+// Load sample image for testing
+function loadSampleImage(imgElement) {
+    const imageSrc = imgElement.src;
+    displayUploadedImage(imageSrc);
+    simulateAIAnalysis();
+}
+
+// Connect with expert functionality
+function connectExpert() {
+    showNotification('Connecting you with our agricultural experts...', 'success');
+    
+    setTimeout(() => {
+        const modal = createExpertModal();
+        document.body.appendChild(modal);
+    }, 1000);
+}
+
+// Save report functionality
+function saveReport() {
+    showNotification('Analysis report saved to your device!', 'success');
+    
+    // Simulate file download
+    const reportData = {
+        timestamp: new Date().toISOString(),
+        disease: "Early Blight",
+        confidence: 92,
+        treatment: "Apply copper-based fungicide",
+        prevention: "Improve air circulation, avoid overhead watering"
+    };
+    
+    const blob = new Blob([JSON.stringify(reportData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'agrodoc-analysis-report.json';
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+// Create expert consultation modal
+function createExpertModal() {
+    const modal = document.createElement('div');
+    modal.className = 'expert-modal';
+    modal.innerHTML = `
+        <div class="modal-backdrop" onclick="closeExpertModal()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Connect with Agricultural Expert</h3>
+                <button onclick="closeExpertModal()" class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="expert-profile">
+                    <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Dr. Agricultural Expert">
+                    <div class="expert-info">
+                        <h4>Dr. Rajesh Kumar</h4>
+                        <p>Plant Pathologist</p>
+                        <p>15+ years experience</p>
+                        <div class="expert-rating">
+                            ⭐⭐⭐⭐⭐ 4.9/5
+                        </div>
+                    </div>
+                </div>
+                <p>Dr. Kumar is available for consultation. He specializes in crop disease diagnosis and treatment planning.</p>
+                <div class="consultation-options">
+                    <button class="btn-primary" onclick="startVideoCall()">
+                        <i class="fas fa-video"></i> Video Consultation
+                    </button>
+                    <button class="btn-secondary" onclick="startChat()">
+                        <i class="fas fa-comments"></i> Chat Consultation
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    return modal;
+}
+
+// Close expert modal
+function closeExpertModal() {
+    const modal = document.querySelector('.expert-modal');
+    if (modal) {
+        modal.remove();
     }
 }
 
-function shareTip(tipTitle) {
-    if (navigator.share) {
-        navigator.share({
-            title: `💡 FarmTech Pro Tip: ${tipTitle}`,
-            text: `Check out this awesome farming tip from FarmTech Pro!`,
-            url: window.location.href
+// Start video call
+function startVideoCall() {
+    showNotification('Starting video consultation...', 'success');
+    closeExpertModal();
+}
+
+// Start chat
+function startChat() {
+    showNotification('Chat consultation started!', 'success');
+    closeExpertModal();
+}
+
+// Setup forms
+function setupForms() {
+    const contactForm = document.getElementById('contactForm');
+    const newsletterForm = document.getElementById('newsletterForm');
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleContactForm();
         });
-    } else {
-        showNotification(`📤 Sharing "${tipTitle}" - Link copied!`);
+    }
+    
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleNewsletterForm();
+        });
     }
 }
 
-function likeTip(tipTitle) {
-    showNotification(`❤️ You liked "${tipTitle}"! Thanks for the feedback!`);
-    // Add to analytics or backend
+// Handle contact form submission
+function handleContactForm() {
+    const formData = new FormData(document.getElementById('contactForm'));
+    const data = Object.fromEntries(formData);
+    
+    showNotification('Thank you for your message! We\'ll get back to you within 24 hours.', 'success');
+    
+    // Reset form
+    document.getElementById('contactForm').reset();
+    
+    // Simulate sending to backend
+    console.log('Contact form data:', data);
 }
 
-function addModernTipStyles() {
-    if (document.getElementById('modern-tip-styles')) return;
+// Handle newsletter form submission
+function handleNewsletterForm() {
+    const formData = new FormData(document.getElementById('newsletterForm'));
+    const data = Object.fromEntries(formData);
+    
+    showNotification('Successfully subscribed to our newsletter!', 'success');
+    
+    // Reset form
+    document.getElementById('newsletterForm').reset();
+    
+    // Simulate sending to backend
+    console.log('Newsletter form data:', data);
+}
 
+// Setup mobile menu
+function setupMobileMenu() {
+    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (mobileToggle && navMenu) {
+        mobileToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            this.classList.toggle('active');
+        });
+    }
+}
+
+// Animate confidence circle
+function animateConfidenceCircle(confidence) {
+    const circle = document.querySelector('.confidence-circle');
+    if (circle) {
+        const circumference = 2 * Math.PI * 45; // radius = 45
+        const offset = circumference - (confidence / 100) * circumference;
+        
+        // Add SVG circle for animation
+        circle.innerHTML = `
+            <svg width="100" height="100" style="position: absolute; top: 0; left: 0;">
+                <circle cx="50" cy="50" r="45" fill="none" stroke="#e5e7eb" stroke-width="8"/>
+                <circle cx="50" cy="50" r="45" fill="none" stroke="#2d5a27" stroke-width="8" 
+                        stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"
+                        stroke-linecap="round" transform="rotate(-90 50 50)"
+                        style="transition: stroke-dashoffset 2s ease-in-out;"/>
+            </svg>
+            <span>${confidence}%</span>
+        `;
+    }
+}
+
+// Show notification
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.innerHTML = `
+        <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
+        <span>${message}</span>
+        <button onclick="this.parentElement.remove()" class="notification-close">&times;</button>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.remove();
+        }
+    }, 5000);
+}
+
+// Add loading animations
+function addLoadingAnimations() {
+    const cards = document.querySelectorAll('.solution-card, .feature-card, .benefit-card, .team-card');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    cards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+}
+
+// Add dynamic styles
+function addLoadingStyles() {
+    if (document.getElementById('loading-styles')) return;
+    
     const style = document.createElement('style');
-    style.id = 'modern-tip-styles';
+    style.id = 'loading-styles';
     style.textContent = `
-        .modern-tip {
-            position: relative;
-            overflow: hidden;
+        .analysis-loading {
+            text-align: center;
+            padding: 2rem;
         }
-
-        .tip-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .tip-icon {
-            font-size: 2rem;
-            background: var(--primary-gradient);
+        
+        .loading-spinner {
             width: 60px;
             height: 60px;
+            border: 4px solid #e5e7eb;
+            border-top: 4px solid #2d5a27;
             border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-steps {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 0.5rem;
-        }
-
-        .tip-category {
-            background: var(--glass-bg);
-            color: var(--text-secondary);
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            border: 1px solid var(--border-glass);
-        }
-
-        .trending-badge {
-            background: linear-gradient(45deg, #ff6b6b, #feca57);
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            animation: pulse 2s infinite;
-        }
-
-        .tip-actions {
-            display: flex;
+            flex-direction: column;
             gap: 0.5rem;
             margin-top: 1.5rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border-glass);
+            text-align: left;
         }
-
-        .tip-action-btn {
-            flex: 1;
-            background: var(--glass-bg);
-            border: 1px solid var(--border-glass);
-            color: var(--text-secondary);
-            padding: 0.6rem;
-            border-radius: 8px;
-            cursor: pointer;
+        
+        .loading-step {
+            padding: 0.5rem;
+            border-radius: 6px;
+            background: #f8faf9;
+            color: #666;
             transition: all 0.3s ease;
-            font-size: 0.8rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.3rem;
         }
-
-        .tip-action-btn:hover {
-            background: var(--primary-gradient);
+        
+        .loading-step.active {
+            background: #2d5a27;
             color: white;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-        }
-
-        .modern-tip:hover .tip-icon {
-            transform: scale(1.1) rotate(5deg);
+            transform: translateX(10px);
         }
     `;
     document.head.appendChild(style);
 }
 
-// Initialize recommendations on page load
-document.addEventListener('DOMContentLoaded', function() {
-    // Auto-generate initial recommendations
-    setTimeout(() => {
-        if (userLocation) {
-            generateRecommendations();
+// Add result styles
+function addResultStyles() {
+    if (document.getElementById('result-styles')) return;
+    
+    const style = document.createElement('style');
+    style.id = 'result-styles';
+    style.textContent = `
+        .analysis-results {
+            padding: 2rem;
         }
-    }, 2000);
-});
+        
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .confidence-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #f8faf9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2d5a27;
+            position: relative;
+        }
+        
+        .result-info h3 {
+            font-size: 1.5rem;
+            color: #1a1a1a;
+            margin-bottom: 0.25rem;
+        }
+        
+        .crop-type {
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        
+        .severity-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .severity-badge.low {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .severity-badge.medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .severity-badge.high {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        
+        .result-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .detail-section h4 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #2d5a27;
+            margin-bottom: 0.5rem;
+        }
+        
+        .detail-section p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .urgency-indicator {
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .urgency-indicator.low {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .urgency-indicator.medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .urgency-indicator.high {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        
+        .result-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .expert-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-backdrop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .expert-profile {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .expert-profile img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .expert-info h4 {
+            margin-bottom: 0.25rem;
+            color: #1a1a1a;
+        }
+        
+        .expert-info p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .expert-rating {
+            font-size: 0.8rem;
+            color: #ff8500;
+        }
+        
+        .consultation-options {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 3000;
+            min-width: 300px;
+            animation: slideInRight 0.3s ease;
+        }
+        
+        .notification.success {
+            border-left: 4px solid #10b981;
+        }
+        
+        .notification.error {
+            border-left: 4px solid #ef4444;
+        }
+        
+        .notification.info {
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .notification i {
+            font-size: 1.2rem;
+        }
+        
+        .notification.success i {
+            color: #10b981;
+        }
+        
+        .notification.error i {
+            color: #ef4444;
+        }
+        
+        .notification.info i {
+            color: #3b82f6;
+        }
+        
+        .notification-close {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #666;
+            margin-left: auto;
+        }
+        
+        @keyframes slideInRight {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// Add mobile menu styles
+const mobileMenuStyles = `
+    @media (max-width: 768px) {
+        .nav-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            transform: translateY(-100%);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            flex-direction: column;
+            padding: 1rem 0;
+        }
+        
+        .nav-menu.active {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .nav-menu .nav-link {
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+    }
+`;
+
+// Add mobile styles
+const mobileStyle = document.createElement('style');
+mobileStyle.textContent = mobileMenuStyles;
+document.head.appendChild(mobileStyle);
+
+// Lazy loading for images
+function setupLazyLoading() {
+    const images = document.querySelectorAll('img[data-src]');
+    
+    const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+                imageObserver.unobserve(img);
+            }
+        });
+    });
+    
+    images.forEach(img => imageObserver.observe(img));
+}
+
+// Call lazy loading setup
+setupLazyLoading();
