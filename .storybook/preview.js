@@ -1,4 +1,5 @@
 import './global.css';
+import './resize-observer-fix.js';
 
 /** @type { import('@storybook/html').Preview } */
 const preview = {
