@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmWise - Smart Farming Solutions</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <i class="fas fa-seedling"></i>
+                <h1>FarmWise</h1>
+            </div>
+            <div class="nav-menu">
+                <a href="#dashboard" class="nav-link">Dashboard</a>
+                <a href="#weather" class="nav-link">Weather</a>
+                <a href="#crops" class="nav-link">Crops</a>
+                <a href="#recommendations" class="nav-link">AI Recommendations</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Smart Farming Solutions for Modern Agriculture</h2>
+                <p>Get personalized crop recommendations based on your location, weather conditions, and farming goals</p>
+                <button class="cta-button" onclick="getLocation()">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Get Started with Your Location
+                </button>
+            </div>
+        </section>
+
+        <!-- Location Status -->
+        <section id="location-section" class="location-section hidden">
+            <div class="location-card">
+                <h3><i class="fas fa-map-marker-alt"></i> Your Location</h3>
+                <div id="location-info" class="location-info">
+                    <p id="location-text">Detecting your location...</p>
+                    <div id="coordinates" class="coordinates"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Weather Dashboard -->
+        <section id="weather-section" class="weather-section hidden">
+            <div class="weather-grid">
+                <div class="current-weather card">
+                    <h3><i class="fas fa-sun"></i> Current Weather</h3>
+                    <div id="current-weather-info">
+                        <div class="weather-main">
+                            <span id="temperature">--°C</span>
+                            <span id="weather-desc">Loading...</span>
+                        </div>
+                        <div class="weather-details">
+                            <div class="weather-item">
+                                <i class="fas fa-tint"></i>
+                                <span>Humidity: <span id="humidity">--%</span></span>
+                            </div>
+                            <div class="weather-item">
+                                <i class="fas fa-wind"></i>
+                                <span>Wind: <span id="wind-speed">-- km/h</span></span>
+                            </div>
+                            <div class="weather-item">
+                                <i class="fas fa-cloud-rain"></i>
+                                <span>Rainfall: <span id="rainfall">-- mm</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="forecast-weather card">
+                    <h3><i class="fas fa-calendar-week"></i> 7-Day Forecast</h3>
+                    <div id="forecast-info" class="forecast-grid">
+                        <!-- Forecast items will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Crop Recommendations -->
+        <section id="crops-section" class="crops-section hidden">
+            <div class="crops-container">
+                <h3><i class="fas fa-leaf"></i> Recommended Crops for Your Area</h3>
+                <div class="crop-input">
+                    <select id="season-select" class="form-select">
+                        <option value="current">Current Season</option>
+                        <option value="kharif">Kharif (Monsoon)</option>
+                        <option value="rabi">Rabi (Winter)</option>
+                        <option value="zaid">Zaid (Summer)</option>
+                    </select>
+                    <select id="soil-type" class="form-select">
+                        <option value="loamy">Loamy Soil</option>
+                        <option value="clay">Clay Soil</option>
+                        <option value="sandy">Sandy Soil</option>
+                        <option value="black">Black Soil</option>
+                        <option value="red">Red Soil</option>
+                    </select>
+                    <button onclick="generateRecommendations()" class="recommendation-btn">
+                        <i class="fas fa-magic"></i> Get AI Recommendations
+                    </button>
+                </div>
+                <div id="crop-recommendations" class="crop-grid">
+                    <!-- Crop recommendations will be populated here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Farming Tips -->
+        <section class="tips-section">
+            <div class="tips-container">
+                <h3><i class="fas fa-lightbulb"></i> Smart Farming Tips</h3>
+                <div id="farming-tips" class="tips-grid">
+                    <!-- Tips will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 FarmWise - Empowering Farmers with Technology</p>
+            <div class="footer-links">
+                <a href="#"><i class="fab fa-github"></i> GitHub</a>
+                <a href="#"><i class="fas fa-envelope"></i> Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

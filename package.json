@@ -1,28 +1,23 @@
 {
-  "name": "website-testing",
+  "name": "farmer-solutions-hub",
   "version": "1.0.0",
-  "description": "Website testing project with Storybook",
-  "main": "index.js",
+  "description": "Smart farming solutions based on location, weather, and crop recommendations",
+  "main": "index.html",
   "scripts": {
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "devDependencies": {
-    "@storybook/addon-essentials": "^7.6.0",
-    "@storybook/addon-interactions": "^7.6.0",
-    "@storybook/addon-links": "^7.6.0",
-    "@storybook/blocks": "^7.6.0",
-    "@storybook/html": "^7.6.0",
-    "@storybook/html-vite": "^7.6.0",
-    "@storybook/testing-library": "^0.2.0",
-    "storybook": "^7.6.0"
+  "dependencies": {
+    "vite": "^5.0.0"
   },
   "keywords": [
-    "storybook",
-    "testing",
-    "frontend"
+    "farming",
+    "agriculture",
+    "weather",
+    "crops",
+    "hackathon"
   ],
-  "author": "",
-  "license": "ISC",
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  "author": "Ayush Khande",
+  "license": "MIT"
 }
