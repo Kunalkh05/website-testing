@@ -351,7 +351,7 @@ function generateWeatherForecast(baseTemp, baseHumidity) {
             day: days[i],
             temperature: baseTemp + Math.floor(Math.random() * 8) - 4,
             condition: ['Sunny', 'Cloudy', 'Rainy', 'Partly Cloudy'][Math.floor(Math.random() * 4)],
-            icon: ['☀️', '☁️', '����️', '⛅'][Math.floor(Math.random() * 4)]
+            icon: ['☀️', '☁️', '🌧️', '⛅'][Math.floor(Math.random() * 4)]
         });
     }
     
@@ -405,17 +405,94 @@ function getCropRecommendations(season, soilType) {
     const cropDatabase = {
         kharif: {
             loamy: [
-                { name: 'Rice', icon: '🌾', season: 'Kharif', waterReq: 'High', duration: '120-150 days', benefits: ['Staple food', 'Good market price', 'Traditional crop'] },
-                { name: 'Cotton', icon: '🌿', season: 'Kharif', waterReq: 'Medium', duration: '180-200 days', benefits: ['High profit', 'Export potential', 'Industrial use'] },
-                { name: 'Sugarcane', icon: '🎋', season: 'Kharif', waterReq: 'High', duration: '300-365 days', benefits: ['Year-round income', 'Multiple uses', 'Stable market'] }
+                {
+                    name: 'Rice',
+                    icon: '🌾',
+                    season: 'Kharif',
+                    waterReq: 'High',
+                    duration: '120-150 days',
+                    benefits: ['💰 Stable Income', '🏠 Local Favorite', '📈 Reliable Market'],
+                    profitScore: 85,
+                    sustainabilityScore: 75,
+                    difficulty: 'Easy',
+                    trendy: false
+                },
+                {
+                    name: 'Organic Cotton',
+                    icon: '🌿',
+                    season: 'Kharif',
+                    waterReq: 'Medium',
+                    duration: '180-200 days',
+                    benefits: ['🌍 Eco-Friendly', '💎 Premium Price', '🚀 Export Ready'],
+                    profitScore: 92,
+                    sustainabilityScore: 95,
+                    difficulty: 'Medium',
+                    trendy: true
+                },
+                {
+                    name: 'Smart Sugarcane',
+                    icon: '🎋',
+                    season: 'Kharif',
+                    waterReq: 'High',
+                    duration: '300-365 days',
+                    benefits: ['💵 Year-round Cash', '🔄 Multiple Products', '📊 Stable Returns'],
+                    profitScore: 88,
+                    sustainabilityScore: 70,
+                    difficulty: 'Hard',
+                    trendy: false
+                }
             ],
             clay: [
-                { name: 'Rice', icon: '🌾', season: 'Kharif', waterReq: 'High', duration: '120-150 days', benefits: ['Suitable for clay soil', 'Water retention', 'High yield'] },
-                { name: 'Jute', icon: '🌱', season: 'Kharif', waterReq: 'High', duration: '120 days', benefits: ['Eco-friendly', 'Good for clay soil', 'Industrial demand'] }
+                {
+                    name: 'Premium Rice',
+                    icon: '🌾',
+                    season: 'Kharif',
+                    waterReq: 'High',
+                    duration: '120-150 days',
+                    benefits: ['🎯 Perfect Match', '💧 Water Smart', '📈 High Yield'],
+                    profitScore: 87,
+                    sustainabilityScore: 80,
+                    difficulty: 'Easy',
+                    trendy: false
+                },
+                {
+                    name: 'Eco Jute',
+                    icon: '🌱',
+                    season: 'Kharif',
+                    waterReq: 'High',
+                    duration: '120 days',
+                    benefits: ['♻️ Sustainable', '🏭 Industrial Demand', '🌱 Soil Friendly'],
+                    profitScore: 78,
+                    sustainabilityScore: 98,
+                    difficulty: 'Medium',
+                    trendy: true
+                }
             ],
             sandy: [
-                { name: 'Millets', icon: '🌾', season: 'Kharif', waterReq: 'Low', duration: '90-120 days', benefits: ['Drought resistant', 'Nutritious', 'Low input cost'] },
-                { name: 'Groundnut', icon: '🥜', season: 'Kharif', waterReq: 'Medium', duration: '100-130 days', benefits: ['Oil crop', 'Nitrogen fixation', 'Good market'] }
+                {
+                    name: 'SuperFood Millets',
+                    icon: '🌾',
+                    season: 'Kharif',
+                    waterReq: 'Low',
+                    duration: '90-120 days',
+                    benefits: ['🏃‍♂️ Health Trend', '💪 Drought Proof', '💰 Low Investment'],
+                    profitScore: 82,
+                    sustainabilityScore: 95,
+                    difficulty: 'Easy',
+                    trendy: true
+                },
+                {
+                    name: 'Premium Groundnut',
+                    icon: '🥜',
+                    season: 'Kharif',
+                    waterReq: 'Medium',
+                    duration: '100-130 days',
+                    benefits: ['🛢️ Oil Gold', '🌱 Soil Booster', '📊 Solid Market'],
+                    profitScore: 85,
+                    sustainabilityScore: 85,
+                    difficulty: 'Medium',
+                    trendy: false
+                }
             ]
         },
         rabi: {
@@ -460,35 +537,259 @@ function getCropRecommendations(season, soilType) {
 function displayCropRecommendations(recommendations) {
     const container = document.getElementById('crop-recommendations');
     container.innerHTML = '';
-    
-    recommendations.forEach(crop => {
+
+    recommendations.forEach((crop, index) => {
         const cropCard = document.createElement('div');
         cropCard.className = 'crop-card';
-        
-        const benefitTags = crop.benefits.map(benefit => 
+
+        // Add animation delay
+        cropCard.style.animationDelay = `${index * 0.1}s`;
+        cropCard.style.animation = 'slideInUp 0.6s ease-out both';
+
+        const benefitTags = crop.benefits.map(benefit =>
             `<span class="benefit-tag">${benefit}</span>`
         ).join('');
-        
+
+        const trendyBadge = crop.trendy ? '<span class="trendy-badge">🔥 Trending</span>' : '';
+        const difficultyColor = crop.difficulty === 'Easy' ? '#4ade80' : crop.difficulty === 'Medium' ? '#f59e0b' : '#ef4444';
+
         cropCard.innerHTML = `
             <div class="crop-header">
-                <span class="crop-icon">${crop.icon}</span>
-                <h4>${crop.name}</h4>
+                <div class="crop-title-section">
+                    <span class="crop-icon">${crop.icon}</span>
+                    <div>
+                        <h4>${crop.name} ${trendyBadge}</h4>
+                        <div class="crop-meta">
+                            <span class="difficulty-badge" style="background: ${difficultyColor}20; color: ${difficultyColor}; border: 1px solid ${difficultyColor}40;">
+                                ${crop.difficulty} Level
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <div class="crop-scores">
+                <div class="score-item">
+                    <div class="score-circle" style="background: conic-gradient(#4ade80 ${crop.profitScore}%, #333 ${crop.profitScore}%)">
+                        <span>${crop.profitScore}</span>
+                    </div>
+                    <label>💰 Profit Score</label>
+                </div>
+                <div class="score-item">
+                    <div class="score-circle" style="background: conic-gradient(#06d6a0 ${crop.sustainabilityScore}%, #333 ${crop.sustainabilityScore}%)">
+                        <span>${crop.sustainabilityScore}</span>
+                    </div>
+                    <label>🌱 Eco Score</label>
+                </div>
+            </div>
+
             <div class="crop-details">
-                <p><strong>Season:</strong> ${crop.season}</p>
-                <p><strong>Water Requirement:</strong> ${crop.waterReq}</p>
-                <p><strong>Duration:</strong> ${crop.duration}</p>
+                <div class="detail-item">
+                    <span class="detail-icon">🗓️</span>
+                    <div>
+                        <strong>Growing Time</strong>
+                        <span>${crop.duration}</span>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-icon">💧</span>
+                    <div>
+                        <strong>Water Needs</strong>
+                        <span>${crop.waterReq}</span>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-icon">🌤️</span>
+                    <div>
+                        <strong>Season</strong>
+                        <span>${crop.season}</span>
+                    </div>
+                </div>
             </div>
+
             <div class="crop-benefits">
-                <h5>Benefits:</h5>
+                <h5>✨ Why This Rocks:</h5>
                 <div class="benefit-tags">
                     ${benefitTags}
                 </div>
             </div>
+
+            <div class="crop-actions">
+                <button class="action-btn primary" onclick="selectCrop('${crop.name}')">
+                    <i class="fas fa-check"></i> Choose This Crop
+                </button>
+                <button class="action-btn secondary" onclick="learnMore('${crop.name}')">
+                    <i class="fas fa-info-circle"></i> Learn More
+                </button>
+            </div>
         `;
-        
+
         container.appendChild(cropCard);
     });
+
+    // Add the modern styles
+    addCropCardStyles();
+}
+
+function selectCrop(cropName) {
+    showNotification(`🎉 Great choice! ${cropName} added to your farm plan. Check your dashboard for next steps!`);
+
+    // Add to local storage or send to backend
+    const selectedCrops = JSON.parse(localStorage.getItem('selectedCrops') || '[]');
+    if (!selectedCrops.includes(cropName)) {
+        selectedCrops.push(cropName);
+        localStorage.setItem('selectedCrops', JSON.stringify(selectedCrops));
+    }
+}
+
+function learnMore(cropName) {
+    showNotification(`📚 Opening detailed guide for ${cropName}...`);
+    // Placeholder for detailed crop information
+}
+
+function addCropCardStyles() {
+    if (document.getElementById('crop-card-styles')) return;
+
+    const style = document.createElement('style');
+    style.id = 'crop-card-styles';
+    style.textContent = `
+        .crop-title-section {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .crop-meta {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .trendy-badge {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        .difficulty-badge {
+            padding: 0.2rem 0.6rem;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .crop-scores {
+            display: flex;
+            justify-content: space-around;
+            margin: 1.5rem 0;
+        }
+
+        .score-item {
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            position: relative;
+            color: white;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .score-item label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            display: block;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .detail-icon {
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .detail-item div {
+            display: flex;
+            flex-direction: column;
+            gap: 0.1rem;
+        }
+
+        .detail-item strong {
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .detail-item span {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .crop-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .action-btn.primary {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .action-btn.secondary {
+            background: var(--glass-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-glass);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .action-btn.primary:hover {
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .action-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+    `;
+    document.head.appendChild(style);
 }
 
 // Farming Tips Functions
