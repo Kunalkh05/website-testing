@@ -111,33 +111,58 @@
 
         <!-- Weather Dashboard -->
         <section id="weather-section" class="weather-section hidden">
+            <div class="section-header">
+                <h3>🌤️ Weather Intelligence Hub</h3>
+                <p>Real-time data + AI predictions for smarter farming decisions</p>
+            </div>
+
             <div class="weather-grid">
-                <div class="current-weather card">
-                    <h3><i class="fas fa-sun"></i> Current Weather</h3>
+                <div class="current-weather glass-card">
+                    <div class="card-header">
+                        <h4>Right Now</h4>
+                        <div class="live-indicator">
+                            <span class="pulse-dot"></span> Live
+                        </div>
+                    </div>
                     <div id="current-weather-info">
                         <div class="weather-main">
-                            <span id="temperature">--°C</span>
+                            <div class="temp-display">
+                                <span id="temperature">--°C</span>
+                                <div class="weather-emoji">☀️</div>
+                            </div>
                             <span id="weather-desc">Loading...</span>
                         </div>
-                        <div class="weather-details">
-                            <div class="weather-item">
-                                <i class="fas fa-tint"></i>
-                                <span>Humidity: <span id="humidity">--%</span></span>
+                        <div class="weather-grid-details">
+                            <div class="weather-metric">
+                                <div class="metric-icon">💧</div>
+                                <div class="metric-data">
+                                    <span class="metric-value" id="humidity">--%</span>
+                                    <span class="metric-label">Humidity</span>
+                                </div>
                             </div>
-                            <div class="weather-item">
-                                <i class="fas fa-wind"></i>
-                                <span>Wind: <span id="wind-speed">-- km/h</span></span>
+                            <div class="weather-metric">
+                                <div class="metric-icon">💨</div>
+                                <div class="metric-data">
+                                    <span class="metric-value" id="wind-speed">-- km/h</span>
+                                    <span class="metric-label">Wind</span>
+                                </div>
                             </div>
-                            <div class="weather-item">
-                                <i class="fas fa-cloud-rain"></i>
-                                <span>Rainfall: <span id="rainfall">-- mm</span></span>
+                            <div class="weather-metric">
+                                <div class="metric-icon">🌧️</div>
+                                <div class="metric-data">
+                                    <span class="metric-value" id="rainfall">-- mm</span>
+                                    <span class="metric-label">Rain</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="forecast-weather card">
-                    <h3><i class="fas fa-calendar-week"></i> 7-Day Forecast</h3>
+                <div class="forecast-weather glass-card">
+                    <div class="card-header">
+                        <h4>7-Day Outlook</h4>
+                        <div class="ai-badge">🤖 AI Powered</div>
+                    </div>
                     <div id="forecast-info" class="forecast-grid">
                         <!-- Forecast items will be populated by JavaScript -->
                     </div>
@@ -148,27 +173,70 @@
         <!-- Crop Recommendations -->
         <section id="crops-section" class="crops-section hidden">
             <div class="crops-container">
-                <h3><i class="fas fa-leaf"></i> Recommended Crops for Your Area</h3>
-                <div class="crop-input">
-                    <select id="season-select" class="form-select">
-                        <option value="current">Current Season</option>
-                        <option value="kharif">Kharif (Monsoon)</option>
-                        <option value="rabi">Rabi (Winter)</option>
-                        <option value="zaid">Zaid (Summer)</option>
-                    </select>
-                    <select id="soil-type" class="form-select">
-                        <option value="loamy">Loamy Soil</option>
-                        <option value="clay">Clay Soil</option>
-                        <option value="sandy">Sandy Soil</option>
-                        <option value="black">Black Soil</option>
-                        <option value="red">Red Soil</option>
-                    </select>
-                    <button onclick="generateRecommendations()" class="recommendation-btn">
-                        <i class="fas fa-magic"></i> Get AI Recommendations
+                <div class="section-header">
+                    <h3>🎯 AI Crop Matcher</h3>
+                    <p>Get personalized crop recommendations based on your unique farm profile</p>
+                </div>
+
+                <div class="smart-filters">
+                    <div class="filter-group">
+                        <label>🗓️ Growing Season</label>
+                        <div class="custom-select">
+                            <select id="season-select">
+                                <option value="current">Current Season (Auto-detect)</option>
+                                <option value="kharif">🌧️ Kharif (Monsoon Vibes)</option>
+                                <option value="rabi">❄️ Rabi (Winter Chill)</option>
+                                <option value="zaid">☀️ Zaid (Summer Heat)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <label>🌍 Soil Type</label>
+                        <div class="custom-select">
+                            <select id="soil-type">
+                                <option value="loamy">🪨 Loamy (The Perfect Mix)</option>
+                                <option value="clay">🟤 Clay (Water Loving)</option>
+                                <option value="sandy">🏖️ Sandy (Quick Draining)</option>
+                                <option value="black">⚫ Black (Cotton Country)</option>
+                                <option value="red">🔴 Red (Iron Rich)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button onclick="generateRecommendations()" class="ai-magic-btn">
+                        <span class="btn-icon">✨</span>
+                        <span class="btn-text">Generate Magic</span>
+                        <span class="btn-subtitle">AI Recommendations</span>
                     </button>
                 </div>
-                <div id="crop-recommendations" class="crop-grid">
+
+                <div id="crop-recommendations" class="modern-crop-grid">
                     <!-- Crop recommendations will be populated here -->
+                </div>
+
+                <div class="insights-panel">
+                    <div class="insight-card">
+                        <div class="insight-icon">📊</div>
+                        <div class="insight-content">
+                            <h5>Market Insights</h5>
+                            <p>Real-time price trends and demand forecast</p>
+                        </div>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-icon">🌱</div>
+                        <div class="insight-content">
+                            <h5>Sustainability Score</h5>
+                            <p>Environmental impact and eco-friendliness rating</p>
+                        </div>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-icon">💰</div>
+                        <div class="insight-content">
+                            <h5>Profit Potential</h5>
+                            <p>Expected ROI and investment requirements</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
