@@ -1,8 +1,9 @@
-// Farmer Solutions Hub - JavaScript Functionality
+// FarmTech Pro - Next-Gen JavaScript Functionality
 
 // Global variables
 let userLocation = null;
 let weatherData = null;
+let isDarkMode = true;
 
 // Mock weather API for demonstration (replace with real API)
 const WEATHER_API_KEY = 'demo_key'; // Replace with actual API key
@@ -11,7 +12,182 @@ const WEATHER_API_KEY = 'demo_key'; // Replace with actual API key
 document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
     generateFarmingTips();
+    initializeTheme();
+    addModernInteractions();
 });
+
+// Modern Gen Z Features
+function initializeTheme() {
+    const savedTheme = localStorage.getItem('farmtech-theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    isDarkMode = savedTheme === 'dark';
+
+    const themeIcon = document.querySelector('.theme-toggle i');
+    if (themeIcon) {
+        themeIcon.className = isDarkMode ? 'fas fa-sun' : 'fas fa-moon';
+    }
+}
+
+function toggleTheme() {
+    isDarkMode = !isDarkMode;
+    const newTheme = isDarkMode ? 'dark' : 'light';
+
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('farmtech-theme', newTheme);
+
+    const themeIcon = document.querySelector('.theme-toggle i');
+    if (themeIcon) {
+        themeIcon.className = isDarkMode ? 'fas fa-sun' : 'fas fa-moon';
+    }
+
+    // Add smooth transition effect
+    document.body.style.transition = 'all 0.3s ease';
+    setTimeout(() => {
+        document.body.style.transition = '';
+    }, 300);
+
+    showNotification(isDarkMode ? '🌙 Dark mode activated!' : '☀️ Light mode activated!');
+}
+
+function shareApp() {
+    if (navigator.share) {
+        navigator.share({
+            title: '🌱 FarmTech Pro - Next-Gen Agriculture',
+            text: 'Check out this amazing farming app with AI-powered crop recommendations!',
+            url: window.location.href
+        }).catch(console.error);
+    } else {
+        // Fallback for browsers that don't support Web Share API
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            showNotification('🔗 Link copied to clipboard!');
+        }).catch(() => {
+            showNotification('❌ Unable to share. Try copying the URL manually.');
+        });
+    }
+}
+
+function watchDemo() {
+    showNotification('🎬 Demo feature coming soon! Follow us for updates.');
+    // Placeholder for demo functionality
+}
+
+function showNotification(message, duration = 3000) {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = 'modern-notification';
+    notification.innerHTML = `
+        <div class="notification-content">
+            <span>${message}</span>
+            <button onclick="this.parentElement.parentElement.remove()" class="notification-close">×</button>
+        </div>
+    `;
+
+    // Add styles
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(20px);
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+        color: var(--text-primary);
+        z-index: 10000;
+        animation: slideInRight 0.3s ease;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        max-width: 350px;
+    `;
+
+    document.body.appendChild(notification);
+
+    // Auto remove after duration
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.style.animation = 'slideOutRight 0.3s ease';
+            setTimeout(() => notification.remove(), 300);
+        }
+    }, duration);
+}
+
+function addModernInteractions() {
+    // Add subtle animations to cards
+    const cards = document.querySelectorAll('.glass-card, .crop-card, .tip-card');
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px) scale(1.02)';
+        });
+
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+
+    // Add parallax effect to background elements
+    let ticking = false;
+
+    function updateParallax() {
+        const scrolled = window.pageYOffset;
+        const parallaxElements = document.querySelectorAll('.floating-shapes .shape');
+
+        parallaxElements.forEach((element, index) => {
+            const rate = scrolled * -0.5 * (index + 1) * 0.1;
+            element.style.transform = `translateY(${rate}px) rotate(${scrolled * 0.05}deg)`;
+        });
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            requestAnimationFrame(updateParallax);
+            ticking = true;
+        }
+    });
+
+    // Add CSS animations
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        .notification-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+
+        .notification-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.1);
+        }
+    `;
+    document.head.appendChild(style);
+}
 
 function initializeApp() {
     console.log('FarmWise Application Initialized');
@@ -175,7 +351,7 @@ function generateWeatherForecast(baseTemp, baseHumidity) {
             day: days[i],
             temperature: baseTemp + Math.floor(Math.random() * 8) - 4,
             condition: ['Sunny', 'Cloudy', 'Rainy', 'Partly Cloudy'][Math.floor(Math.random() * 4)],
-            icon: ['☀️', '☁️', '🌧️', '⛅'][Math.floor(Math.random() * 4)]
+            icon: ['☀️', '☁️', '����️', '⛅'][Math.floor(Math.random() * 4)]
         });
     }
     
