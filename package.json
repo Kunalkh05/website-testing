@@ -1,0 +1,24 @@
+{
+  "name": "agrodoc-ai-crop-doctor",
+  "version": "1.0.0",
+  "description": "Smart AI Crop Doctor for New-Age Farmers - AI-powered crop disease detection platform",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vite": "^5.0.0"
+  },
+  "keywords": [
+    "agriculture",
+    "AI",
+    "crop disease detection",
+    "farming",
+    "machine learning",
+    "hackathon"
+  ],
+  "author": "Ayush Khande",
+  "license": "MIT"
+}

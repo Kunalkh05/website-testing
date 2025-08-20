@@ -1,0 +1,50 @@
+/* Global styles to prevent ResizeObserver issues */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Stabilize Storybook containers */
+#storybook-root,
+#storybook-docs,
+.sb-show-main,
+.sb-main-padded,
+.docs-story {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  contain: layout style paint;
+  transform: translateZ(0);
+  will-change: auto;
+}
+
+/* Prevent layout thrashing */
+.sb-show-main, .sb-main-padded {
+  contain: layout style paint;
+  isolation: isolate;
+}
+
+/* Stabilize all interactive elements */
+button, input, select, textarea {
+  contain: layout;
+  transform: translateZ(0);
+}
+
+/* Force GPU acceleration to prevent layout recalculations */
+.storybook-button {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Stabilize iframe content */
+iframe {
+  contain: layout style paint;
+  transform: translateZ(0);
+}
